@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" ng-app="TreinamentoApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Teste docnix</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/dashboard.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <h4 class="nav-link active">Aluno</h4>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="alunoListar">
+                            <span data-feather="home"></span>
+                           Listar Alunos<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="alunoIncluir">
+                            <span data-feather="file"></span>
+                            Cadastrar Aluno
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav flex-column">
+                    <h4 class="nav-link active">Usuário</h4>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="usuarioListar">
+                            <span data-feather="home"></span>
+                            Listar Usuários<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="usuarioIncluir">
+                            <span data-feather="file"></span>
+                            Cadastrar Usuário
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav flex-column">
+                    <h4 class="nav-link active">Escola</h4>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="escolaListar">
+                            <span data-feather="home"></span>
+                            Listar Escolas<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="escolaIncluir">
+                            <span data-feather="file"></span>
+                            Cadastrar Escola
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <ui-view class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"></ui-view>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="http://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/d83984acc8.js" crossorigin="anonymous"></script>
+
+
+<script src="./src/app.js"></script>
+<script src="src/app-config.value.js"></script>
+<script src="./src/aluno/aluno.route.js"></script>
+<script src="./src/aluno/aluno.services.js"></script>
+<script src="./src/aluno/aluno-incluir.controller.js"></script>
+<script src="./src/aluno/aluno-editar.controller.js"></script>
+<script src="./src/aluno/aluno-listar.controller.js"></script>
+<script src="./src/usuario/usuario.route.js"></script>
+<script src="./src/usuario/usuario.services.js"></script>
+<script src="./src/usuario/usuario-incluir.controller.js"></script>
+<script src="./src/usuario/usuario-editar.controller.js"></script>
+<script src="./src/usuario/usuario-listar.controller.js"></script>
+<script src="./src/escola/escola.route.js"></script>
+<script src="./src/escola/escola.services.js"></script>
+<script src="./src/escola/escola-incluir.controller.js"></script>
+<script src="./src/escola/escola-editar.controller.js"></script>
+<script src="./src/escola/escola-listar.controller.js"></script>
+<script src="src/filters/ativoFilter.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<main role="main">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Escolas</h1>
+    </div>
+    <div class="col-xl-12">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Diretor</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Ativa</th>
+                <th scope="col">Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="escola in escolas track by escola.id">
+                <td>{{escola.id}}</td>
+                <td>{{escola.nome}}</td>
+                <td>{{escola.diretor.nome}}</td>
+                <td>{{escola.descricao}}</td>
+                <td>{{escola.ativa | ativo}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="editar(escola.id)"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger" ng-click="deletar(escola.nome,escola.id);"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

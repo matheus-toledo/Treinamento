@@ -1,0 +1,35 @@
+<main role="main">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Alunos</h1>
+    </div>
+    <div class="col-xl-12">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Idade</th>
+                <th scope="col">Matrícula</th>
+                <th scope="col">Data da matrícula</th>
+                <th scope="col">Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="aluno in alunos track by aluno.id">
+                <td>{{aluno.id}}</td>
+                <td>{{aluno.nome}}</td>
+                <td>{{aluno.email}}</td>
+                <td>{{aluno.idade}}</td>
+                <td>{{aluno.matricula}}</td>
+                <td>{{aluno.dataDaMatricula | date:'dd/MM/yyyy'}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="editar(aluno.id)"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger" ng-click="deletar(aluno.nome,aluno.id);"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
