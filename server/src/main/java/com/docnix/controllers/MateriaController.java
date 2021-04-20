@@ -31,6 +31,13 @@ public class MateriaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response inserirUsuario(Materia materia) {
+        if (materia.getProfessor()==null){
+            return Response.status(400).build();
+        }
+
+        if (materia.getDescricao().length()>2500){
+            materia.setDescricao(materia.getDescricao().substring(0,2499));
+        }
 
         return Response.status(Response.Status.CREATED).entity(materiaService.inserir(materia)).build();
     }
