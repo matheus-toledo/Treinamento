@@ -20,8 +20,7 @@ public class Materia{
     @JoinColumn(name = "id_usuario",foreignKey = @ForeignKey(name = "id_usuario_fk"),nullable = false)
     private Usuario professor;
 
-    public Materia(long id, String nome, String descricao, Usuario professor) {
-        this.id = id;
+    public Materia(String nome, String descricao, Usuario professor) {
         this.nome = nome;
         this.descricao = descricao;
         this.professor = professor;
