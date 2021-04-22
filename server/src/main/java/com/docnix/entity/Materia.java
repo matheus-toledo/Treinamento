@@ -8,7 +8,7 @@ public class Materia{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_materia",nullable = false)
-    private long id;
+    private Long id;
 
     @Column(name = "nome_materia",nullable = false)
     private String nome;
@@ -17,7 +17,7 @@ public class Materia{
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario",foreignKey = @ForeignKey(name = "id_usuario_fk"),nullable = false)
+    @JoinColumn(name = "id_professor",nullable = false)
     private Usuario professor;
 
     public Materia(String nome, String descricao, Usuario professor) {
@@ -29,7 +29,7 @@ public class Materia{
     public Materia() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -63,7 +63,10 @@ public class Materia{
 
     @Override
     public int hashCode() {
-        return ((Long)this.id).hashCode();
+        if(this.id !=null){
+            return this.id.hashCode();
+        }
+        return super.hashCode();
     }
 
     @Override

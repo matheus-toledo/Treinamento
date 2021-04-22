@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "TRE_ESCOLA")
 public class Escola {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_escola",nullable = false)
@@ -15,7 +14,7 @@ public class Escola {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "id_usuario_fk"),nullable = false)
+    @JoinColumn(name = "id_diretor",nullable = false)
     private Usuario diretor;
 
     @Column(name = "descricao_escola",nullable = false, length = 300)
