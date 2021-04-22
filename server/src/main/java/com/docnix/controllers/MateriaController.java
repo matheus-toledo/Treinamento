@@ -16,21 +16,21 @@ public class MateriaController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuarios() {
+    public Response getMaterias() {
         return Response.ok().entity(materiaService.listar()).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@PathParam("id") Long id) {
+    public Response getMateria(@PathParam("id") Long id) {
         return Response.ok().entity(materiaService.obter(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirUsuario(Materia materia) {
+    public Response inserirMateria(Materia materia) {
         if (materia.getProfessor()==null){
             return Response.status(400).build();
         }
@@ -46,14 +46,14 @@ public class MateriaController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response alteraUsuario(Materia materia) {
+    public Response alteraMateria(Materia materia) {
 
         return Response.ok().entity(materiaService.editar(materia)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deletaUsuario(@PathParam("id") Long id) {
+    public Response deletaMateria(@PathParam("id") Long id) {
         materiaService.deletar(id);
         return Response.ok().build();
     }
