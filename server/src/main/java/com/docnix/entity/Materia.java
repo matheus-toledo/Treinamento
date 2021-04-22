@@ -1,12 +1,10 @@
 package com.docnix.entity;
 
-import org.hibernate.annotations.ValueGenerationType;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TRE_MATERIA")
-public class Materia {
+public class Materia{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_materia",nullable = false)
@@ -63,4 +61,24 @@ public class Materia {
     public void setProfessor(Usuario professor) {
         this.professor = professor;
     }
+
+    @Override
+    public int hashCode() {
+        return ((Long)this.id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj==null){
+            return false;
+        }
+        if(!(obj instanceof Materia)){
+            return false;
+        }
+        if (obj==this){
+            return true;
+        }
+        return this.getId() == ((Materia) obj).getId();
+    }
+
 }
