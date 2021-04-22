@@ -2,6 +2,7 @@ package com.docnix.config;
 
 import com.docnix.entity.Aluno;
 import com.docnix.entity.Escola;
+import com.docnix.entity.Materia;
 import com.docnix.entity.Usuario;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,6 +22,7 @@ public class HibernateConfig {
         config.addAnnotatedClass(Aluno.class);
         config.addAnnotatedClass(Usuario.class);
         config.addAnnotatedClass(Escola.class);
+        config.addAnnotatedClass(Materia.class);
         sessionFactory = config.buildSessionFactory();
     }
 
