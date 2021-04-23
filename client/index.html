@@ -70,6 +70,21 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="nav flex-column">
+                    <h4 class="nav-link active">Matéria</h4>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="materiaListar">
+                            <span data-feather="home"></span>
+                            Listar Matérias<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" ui-sref="materiaIncluir">
+                            <span data-feather="file"></span>
+                            Cadastrar Materia
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
 
@@ -105,6 +120,11 @@
 <script src="./src/escola/escola-incluir.controller.js"></script>
 <script src="./src/escola/escola-editar.controller.js"></script>
 <script src="./src/escola/escola-listar.controller.js"></script>
+<script src="./src/materia/materia.route.js"></script>
+<script src="./src/materia/materia.services.js"></script>
+<script src="./src/materia/materia-incluir.controller.js"></script>
+<script src="./src/materia/materia-editar.controller.js"></script>
+<script src="./src/materia/materia-listar.controller.js"></script>
 <script src="src/filters/ativoFilter.js"></script>
 </body>
 </html>

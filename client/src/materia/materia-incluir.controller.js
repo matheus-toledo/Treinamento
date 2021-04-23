@@ -1,5 +1,5 @@
 angular.module("TreinamentoApp")
-    .controller("MateriancluirController", MateriaIncluirController);
+    .controller("MateriaIncluirController", MateriaIncluirController);
 
 
 MateriaIncluirController.$inject = ['$scope', '$http', '$state', 'UsuarioService','MateriaService'];

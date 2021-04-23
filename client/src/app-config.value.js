@@ -4,6 +4,6 @@ angular.module("TreinamentoApp").value("config",{
     escolaUrl: "http://localhost:8080/api/escolas",
     materiaUrl:"http://localhost:8080/api/materias",
     nomeMaxLength: 255,
-    descricaoMaxLength: 300
-
+    descricaoMaxLength: 300,
+    materiaDescricaoMaxLength:2500
 })

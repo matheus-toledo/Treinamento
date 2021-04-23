@@ -12,13 +12,13 @@ function MateriaRoute($stateProvider){
         .state({
             name: 'materiaEditar',
             url: '/materias/{id:int}',
-            templateUrl: './src/materia/usuario-editar.html',
+            templateUrl: './src/materia/materia-editar.html',
             controller: 'MateriaEditarController'
         })
         .state({
             name: 'materiaIncluir',
-            url: '/materia/novo',
-            templateUrl: './src/materia/usuario-incluir.html',
+            url: '/materias/novo',
+            templateUrl: './src/materia/materia-incluir.html',
             controller: 'MateriaIncluirController'
         });
 }

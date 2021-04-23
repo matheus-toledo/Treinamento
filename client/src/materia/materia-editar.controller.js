@@ -4,7 +4,7 @@ angular.module("TreinamentoApp")
 
 MateriaEditarController.$inject = ['$scope', '$http', '$state', '$stateParams', 'MateriaService', 'UsuarioService'];
 
-function MateriaEditarController($scope, $http, $state, $stateParams, MateriaService) {
+function MateriaEditarController($scope, $http, $state, $stateParams, MateriaService, UsuarioService) {
 
     $scope.editar = _editar;
     $scope.materia = {};
@@ -12,15 +12,17 @@ function MateriaEditarController($scope, $http, $state, $stateParams, MateriaSer
     _inicializar();
 
     function _inicializar() {
+        UsuarioService.listar()
+            .then(response =>{
+                $scope.usuarios = response;
+            });
+
         MateriaService.consultar($stateParams.id)
             .then(response => {
                 $scope.materia = response;
             })
 
-        UsuarioService.listar()
-            .then(response =>{
-                $scope.usuarios = response;
-            })
+
 
     }
 

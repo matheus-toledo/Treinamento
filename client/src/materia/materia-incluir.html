@@ -1,0 +1,51 @@
+<main role="main">
+    <div class="pb-2 mb-3 border-bottom">
+        <h1 class="h2">Cadastro de Matérias</h1>
+    </div>
+    <div class="col-12">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 order-md-1 mb-5 offset-3">
+
+                <form role="form" class="was-validated" name="materiaIncluirForm" ng-submit="materiaIncluirForm.$valid && incluir()" novalidate>
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="nome">Nome (Até 255 caracteres)</label>
+                            <input type="text" class="form-control" id="nome" name="nome" maxlength={{nomeMaxLength}} required ng-model="materia.nome">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="descricao">Descrição (Até 2500 caracteres)</label>
+                            <textarea maxlength="{{materiaDescricaoMaxLength}}" class="form-control" id="descricao" name="descricao" required ng-model="materia.descricao"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="professor">Professor</label>
+                            <select id="professor" name="professor" class="form-control" ng-options="usuario.id for usuario in usuarios" ng-model="materia.professor" required>
+                                <option value="" ng-if="false"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <button class="btn btn-lg btn-primary offset-1" ui-sref="materiaListar">
+                                Voltar
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-lg btn-success" type="submit">
+                                Cadastrar Matéria
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
