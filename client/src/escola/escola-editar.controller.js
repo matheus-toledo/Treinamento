@@ -20,9 +20,7 @@ function EscolaEditarController($scope, $http, $state, EscolaService, $statePara
         UsuarioService.listar()
             .then(response => {
                 $scope.usuarios = response;
-            }).then(() => {
-
-        })
+            });
 
         EscolaService.consultar($stateParams.id)
             .then(response => {
