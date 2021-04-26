@@ -2,27 +2,26 @@ angular.module("TreinamentoApp")
     .controller("MateriaIncluirController", MateriaIncluirController);
 
 
-MateriaIncluirController.$inject = ['$scope', '$http', '$state', 'UsuarioService','MateriaService'];
+MateriaIncluirController.$inject = ['$scope', '$http', '$state', 'UsuarioService','MateriaService', 'configParams'];
 
-function MateriaIncluirController($scope, $http, $state, UsuarioService, MateriaService) {
+function MateriaIncluirController($scope, $http, $state, UsuarioService, MateriaService, configParams) {
 
-    $scope.incluir = _incluir;
+    $scope.incluir = incluir;
     $scope.materia = {};
     $scope.usuarios = [];
-
     _inicializar()
 
     function _inicializar(){
         UsuarioService.listar()
             .then(response =>{
                 $scope.usuarios = response;
+                $scope.materia.professor=response[0];
             })
     }
 
-    function _incluir() {
+    function incluir() {
         MateriaService.cadastrar($scope.materia).then(response => {
-            $scope.materia = response;
-            $state.go('materiaEditar', {id: $scope.materia.id});
+            $state.go('materiaEditar', {id: response.id});
         });
     }
 

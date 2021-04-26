@@ -1,9 +1,9 @@
 angular.module("TreinamentoApp")
     .service("MateriaService", MateriaService);
 
-MateriaService.$inject = ["$http",'config'];
+MateriaService.$inject = ["$http",'configParams'];
 
-function MateriaService ($http, config){
+function MateriaService ($http, configParams){
 
     this.listar = _listar
     this.cadastrar = _cadastrar
@@ -13,7 +13,7 @@ function MateriaService ($http, config){
 
 
     function _listar (){
-        return $http.get(config.materiaUrl).then(response => {
+        return $http.get(configParams.materiaUrl).then(response => {
             return response.data;
         }).catch(data => {
             window.alert('Erro ao listar matérias: ' + data);
@@ -21,7 +21,7 @@ function MateriaService ($http, config){
     }
 
     function _cadastrar(materia) {
-        return $http.post(`${config.materiaUrl}`, materia)
+        return $http.post(`${configParams.materiaUrl}`, materia)
             .then(response => {
                 window.alert("Matéria cadastrada com sucesso");
                 return response.data;
@@ -32,7 +32,7 @@ function MateriaService ($http, config){
     }
 
     function _editar(materia) {
-        return $http.put(`${config.materiaUrl}/${materia.id}`, materia)
+        return $http.put(`${configParams.materiaUrl}/${materia.id}`, materia)
             .then(() => {
                 window.alert("Matéria editada com sucesso");
             })
@@ -42,7 +42,7 @@ function MateriaService ($http, config){
     }
 
     function _deletar(id) {
-        return $http.delete(`${config.materiaUrl}/${id}`)
+        return $http.delete(`${configParams.materiaUrl}/${id}`)
             .then(() => {
                 window.alert("Matéria deletada com sucesso");
 
@@ -53,7 +53,7 @@ function MateriaService ($http, config){
     }
 
     function _consultar(id) {
-        return $http.get(`${config.materiaUrl}/${id}`)
+        return $http.get(`${configParams.materiaUrl}/${id}`)
             .then(response =>{
                 return response.data;
             });

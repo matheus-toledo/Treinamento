@@ -6,7 +6,7 @@ MateriaEditarController.$inject = ['$scope', '$http', '$state', '$stateParams', 
 
 function MateriaEditarController($scope, $http, $state, $stateParams, MateriaService, UsuarioService) {
 
-    $scope.editar = _editar;
+    $scope.editar = editar;
     $scope.materia = {};
     $scope.usuarios=[];
     _inicializar();
@@ -22,14 +22,18 @@ function MateriaEditarController($scope, $http, $state, $stateParams, MateriaSer
                 $scope.materia = response;
             })
 
-
-
     }
 
-    function _editar() {
+    function editar() {
+        _atualizar();
         MateriaService.editar($scope.materia)
             .then(() => {
                 $state.go('materiaListar');
             })
     }
+
+    function _atualizar(){
+        $scope.materia.professor = $scope.usuarios.filter(usuario =>usuario.id===$scope.materia.professor.id)[0];
+    }
+
 }

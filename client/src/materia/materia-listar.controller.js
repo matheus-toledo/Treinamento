@@ -4,8 +4,8 @@ angular.module("TreinamentoApp")
 MateriaListarController.$inject = ['$scope', '$http', '$state', 'MateriaService'];
 
 function MateriaListarController($scope, $http, $state, MateriaService) {
-    $scope.editar = _editar;
-    $scope.deletar = _deletar;
+    $scope.editar = editar;
+    $scope.deletar = deletar;
     $scope.materias=[];
 
     _inicializar();
@@ -19,7 +19,7 @@ function MateriaListarController($scope, $http, $state, MateriaService) {
     }
 
 
-    function _deletar(nome, id) {
+    function deletar(nome, id) {
         if (confirm(`Deseja deletar a matéria ${nome}?`)) {
             MateriaService.deletar(id).then(() => {
                 _atualizar(id);
@@ -27,7 +27,7 @@ function MateriaListarController($scope, $http, $state, MateriaService) {
         }
     }
 
-    function _editar(id) {
+    function editar(id) {
         $state.go('materiaEditar', {id:id});
     }
 
