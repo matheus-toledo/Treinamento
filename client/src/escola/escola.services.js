@@ -1,9 +1,9 @@
 angular.module("TreinamentoApp")
     .service("EscolaService", EscolaService);
 
-EscolaService.$inject = ["$http", 'config'];
+EscolaService.$inject = ["$http", 'configParams'];
 
-function EscolaService($http, config) {
+function EscolaService($http, configParams) {
 
     this.listar = _listar
     this.cadastrar = _cadastrar
@@ -12,7 +12,7 @@ function EscolaService($http, config) {
     this.consultar = _consultar
 
     function _listar() {
-        return $http.get(config.escolaUrl)
+        return $http.get(configParams.escolaUrl)
             .then(response => {
                 return response.data;
             }).catch(error => {
@@ -21,14 +21,14 @@ function EscolaService($http, config) {
     }
 
     function _consultar(id) {
-        return $http.get(`${config.escolaUrl}/${id}`)
+        return $http.get(`${configParams.escolaUrl}/${id}`)
             .then(response =>{
                 return response.data;
             });
     }
 
     function _cadastrar(aluno) {
-        return $http.post(`${config.escolaUrl}`, aluno)
+        return $http.post(`${configParams.escolaUrl}`, aluno)
             .then(response => {
                 window.alert("Escola cadastrada com sucesso");
                 return response.data;
@@ -39,7 +39,7 @@ function EscolaService($http, config) {
     }
 
     function _editar(aluno) {
-        return $http.put(`${config.escolaUrl}/${aluno.id}`, aluno)
+        return $http.put(`${configParams.escolaUrl}/${aluno.id}`, aluno)
             .then(() => {
                 window.alert("Escola editada com sucesso");
             })
@@ -49,7 +49,7 @@ function EscolaService($http, config) {
     }
 
     function _deletar(id) {
-        return $http.delete(`${config.escolaUrl}/${id}`)
+        return $http.delete(`${configParams.escolaUrl}/${id}`)
             .then(() => {
                 window.alert("Escola deletada com sucesso");
 

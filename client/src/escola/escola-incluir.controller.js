@@ -2,13 +2,11 @@ angular.module("TreinamentoApp")
     .controller("EscolaIncluirController", EscolaIncluirController);
 
 
-EscolaIncluirController.$inject = ['$scope', '$http', '$state', 'EscolaService', 'UsuarioService', 'config'];
+EscolaIncluirController.$inject = ['$scope', '$http', '$state', 'EscolaService', 'UsuarioService', 'configParams'];
 
-function EscolaIncluirController($scope, $http, $state, EscolaService, UsuarioService, config) {
+function EscolaIncluirController($scope, $http, $state, EscolaService, UsuarioService, configParams) {
 
-    $scope.incluir = _incluir;
-    $scope.nomeMaxLength = config.nomeMaxLength;
-    $scope.descricaoMaxLength = config.descricaoMaxLength;
+    $scope.incluir = incluir;
     $scope.escola = {};
     $scope.usuarios = [];
     _inicializar();
@@ -18,10 +16,11 @@ function EscolaIncluirController($scope, $http, $state, EscolaService, UsuarioSe
         UsuarioService.listar()
             .then(response => {
                 $scope.usuarios = response;
+                $scope.escola.diretor=response[0];
             })
     }
 
-    function _incluir() {
+    function incluir() {
         EscolaService.cadastrar($scope.escola).then(response => {
             $scope.escola = response;
             $state.go('escolaEditar', {id: $scope.escola.id});

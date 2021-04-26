@@ -1,11 +1,11 @@
 angular.module("TreinamentoApp")
     .controller("EscolaListarController", EscolaListarController);
 
-EscolaListarController.$inject = ['$scope', '$http', '$state','config','EscolaService'];
+EscolaListarController.$inject = ['$scope', '$http', '$state', 'EscolaService'];
 
-function EscolaListarController($scope, $http, $state,config, EscolaService) {
-    $scope.editar = _editar;
-    $scope.deletar = _deletar;
+function EscolaListarController($scope, $http, $state, EscolaService) {
+    $scope.editar = editar;
+    $scope.deletar = deletar;
 
     _inicializar();
 
@@ -19,20 +19,20 @@ function EscolaListarController($scope, $http, $state,config, EscolaService) {
         $scope.escolas = $scope.escolas.filter(escola => escola.id !== id);
     }
 
-    function _deletar(nome,id) {
+    function deletar(nome, id) {
         if (confirm(`Deseja deletar a escola: ${nome}?`)) {
-            EscolaService.deletar(id).then(()=>{
+            EscolaService.deletar(id).then(() => {
                 _atualizar(id);
             })
         }
     }
 
-    function _editar(id) {
-        $state.go('escolaEditar', {id:id});
+    function editar(id) {
+        $state.go('escolaEditar', {id: id});
     }
 
     function _listar() {
-        EscolaService.listar().then(response =>{
+        EscolaService.listar().then(response => {
             $scope.escolas = response;
         })
     }

@@ -6,11 +6,9 @@ EscolaEditarController.$inject = ['$scope', '$http', '$state', 'EscolaService', 
 
 function EscolaEditarController($scope, $http, $state, EscolaService, $stateParams, UsuarioService) {
 
-    $scope.editar = _editar;
+    $scope.editar = editar;
     $scope.escola = {};
     $scope.usuarios = [];
-    $scope.simChecked = undefined;
-    $scope.naoChecked = undefined;
 
     _inicializar();
 
@@ -25,18 +23,20 @@ function EscolaEditarController($scope, $http, $state, EscolaService, $statePara
         EscolaService.consultar($stateParams.id)
             .then(response => {
                 $scope.escola = response;
-                $scope.simChecked=$scope.escola.ativa;
-                $scope.naoChecked=!$scope.simChecked;
             });
-
     }
 
-    function _editar() {
-        console.log($scope.escola.diretor);
+    function editar() {
+        _atualizarDiretor();
         EscolaService.editar($scope.escola)
             .then(() => {
                 $state.go('escolaListar');
             });
 
+    }
+
+    function _atualizarDiretor(){
+        console.log($scope.usuarios.filter(usuario =>usuario.id===$scope.escola.diretor.id)[0])
+        $scope.escola.diretor = $scope.usuarios.filter(usuario =>usuario.id===$scope.escola.diretor.id)[0];
     }
 }
