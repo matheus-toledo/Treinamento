@@ -1,0 +1,34 @@
+<main role="main">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 class="h2">Lista de Cursos</h1>
+    </div>
+    <div class="col-xl-12">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Sigla</th>
+                <th scope="col">Coordenador</th>
+                <th scope="col">Escola</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Opções</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="curso in cursos track by $index">
+                <td>{{curso.id}}</td>
+                <td>{{curso.nome}}</td>
+                <td>{{curso.sigla}}</td>
+                <td>{{curso.coordenador.nome}}</td>
+                <td>{{curso.escola.nome}}</td>
+                <td>{{curso.descricao}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" ng-click="editar(curso.id)"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger" ng-click="deletar(curso.nome,curso.id);"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>

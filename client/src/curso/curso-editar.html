@@ -1,0 +1,75 @@
+<main role="main">
+    <div class="pb-2 mb-3 border-bottom">
+        <h1 class="h2">Editar Curso</h1>
+    </div>
+    <div class="col-12">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 order-md-1 mb-5 offset-3">
+                <form role="form" class="was-validated" name="cursoEditarForm" ng-submit="cursoEditarForm.$valid && editar()" novalidate>
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="nome">Nome (Até 255 caracteres)</label>
+                            <input type="text" class="form-control" id="nome" name="nome" maxlength={{nomeMaxLength}} required ng-model="curso.nome">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="sigla">Sigla (Até 5 caracteres)</label>
+                            <input maxlength="{{cursoSiglaMaxLength}}" type="text" class="form-control" id="sigla" name="sigla" required ng-model="curso.sigla">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="coordenador">Coordenador</label>
+                            <select id="coordenador" name="coordenador" class="form-control" ng-options="usuario.id for usuario in usuarios track by usuario.id" ng-model="curso.coordenador" required>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="escola">Escola</label>
+                            <select id="escola" name="escola" class="form-control" ng-model="curso.escola.id" required>
+                                <option ng-repeat="escola in escolas" ng-value="escola.id">{{escola.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="materias">Materias</label>
+                            <select multiple id="materias" name="materias" class="form-control" ng-options="materia.id for materia in materias" ng-model="curso.materias" required>
+                                <option value="" ng-if="false"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6 mb-3">
+                            <label for="descricao">Descrição (Até 2500 caracteres)</label>
+                            <textarea maxlength="{{cursoDescricaoMaxLength}}" class="form-control" id="descricao" name="descricao" required ng-model="curso.descricao"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <button class="btn btn-lg btn-primary offset-1" ui-sref="cursoListar">
+                                Voltar
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-lg btn-success" type="submit">
+                                Editar Curso
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
