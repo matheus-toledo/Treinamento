@@ -18,7 +18,7 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" ui-sref="alunoListar">Treinamento</a>
 </nav>
 
 <div class="container-fluid">
@@ -26,62 +26,57 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <h4 class="nav-link active">Aluno</h4>
-                    <li class="nav-item">
+                    <a href="">
+                        <h4 class="nav-link active" data-toggle="collapse" data-target=".aluno">Aluno</h4>
+                    </a>
+                    <li class="nav-item collapse aluno">
                         <a class="nav-link" ui-sref="alunoListar">
                             <span data-feather="home"></span>
-                           Listar Alunos<span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" ui-sref="alunoIncluir">
-                            <span data-feather="file"></span>
-                            Cadastrar Aluno
+                            Listar Alunos<span class="sr-only">(current)</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="nav flex-column">
-                    <h4 class="nav-link active">Usuário</h4>
-                    <li class="nav-item">
+                    <a href="">
+                        <h4 class="nav-link active" data-toggle="collapse" data-target=".usuario">Usuário</h4>
+                    </a>
+                    <li class="nav-item collapse usuario">
                         <a class="nav-link" ui-sref="usuarioListar">
                             <span data-feather="home"></span>
                             Listar Usuários<span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" ui-sref="usuarioIncluir">
-                            <span data-feather="file"></span>
-                            Cadastrar Usuário
-                        </a>
-                    </li>
                 </ul>
                 <ul class="nav flex-column">
-                    <h4 class="nav-link active">Escola</h4>
-                    <li class="nav-item">
+                    <a href="">
+                        <h4 class="nav-link active" data-toggle="collapse" data-target=".escola">Escola</h4>
+                    </a>
+                    <li class="nav-item collapse escola">
                         <a class="nav-link" ui-sref="escolaListar">
                             <span data-feather="home"></span>
                             Listar Escolas<span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" ui-sref="escolaIncluir">
-                            <span data-feather="file"></span>
-                            Cadastrar Escola
-                        </a>
-                    </li>
                 </ul>
                 <ul class="nav flex-column">
-                    <h4 class="nav-link active">Matéria</h4>
-                    <li class="nav-item">
+                    <a href="">
+                        <h4 class="nav-link active" data-toggle="collapse" data-target=".materia">Matéria</h4>
+                    </a>
+                    <li class="nav-item collapse materia">
                         <a class="nav-link" ui-sref="materiaListar">
                             <span data-feather="home"></span>
                             Listar Matérias<span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" ui-sref="materiaIncluir">
-                            <span data-feather="file"></span>
-                            Cadastrar Materia
+                </ul>
+                <ul class="nav flex-column">
+                    <a href="">
+                        <h4 class="nav-link active" data-toggle="collapse" data-target=".curso">Curso</h4>
+                    </a>
+                    <li class="nav-item collapse curso">
+                        <a class="nav-link" ui-sref="cursoListar">
+                            <span data-feather="home"></span>
+                            Listar Cursos<span class="sr-only">(current)</span>
                         </a>
                     </li>
                 </ul>
@@ -104,7 +99,7 @@
 
 
 <script src="./src/app.js"></script>
-<script src="src/app-config.value.js"></script>
+<script src="src/app-config.params.js"></script>
 <script src="./src/aluno/aluno.route.js"></script>
 <script src="./src/aluno/aluno.services.js"></script>
 <script src="./src/aluno/aluno-incluir.controller.js"></script>
@@ -125,6 +120,11 @@
 <script src="./src/materia/materia-incluir.controller.js"></script>
 <script src="./src/materia/materia-editar.controller.js"></script>
 <script src="./src/materia/materia-listar.controller.js"></script>
+<script src="./src/curso/curso.route.js"></script>
+<script src="./src/curso/curso.services.js"></script>
+<script src="./src/curso/curso-incluir.controller.js"></script>
+<script src="./src/curso/curso-editar.controller.js"></script>
+<script src="./src/curso/curso-listar.controller.js"></script>
 <script src="src/filters/ativoFilter.js"></script>
 </body>
 </html>
