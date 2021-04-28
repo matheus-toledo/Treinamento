@@ -6,7 +6,8 @@ UsuarioEditarController.$inject = ['$scope', '$http', '$state', '$stateParams', 
 
 function UsuarioEditarController($scope, $http, $state, $stateParams, UsuarioService) {
 
-    $scope.editar = _editar;
+    $scope.editar = editar;
+
     _inicializar();
 
     function _inicializar() {
@@ -17,7 +18,7 @@ function UsuarioEditarController($scope, $http, $state, $stateParams, UsuarioSer
             })
     }
 
-    function _editar() {
+    function editar() {
         UsuarioService.editar($scope.usuario)
             .then(() => {
                 $state.go('usuarioListar');

@@ -1,9 +1,9 @@
 angular.module("TreinamentoApp")
     .service("UsuarioService", UsuarioService);
 
-UsuarioService.$inject = ["$http",'config'];
+UsuarioService.$inject = ["$http",'configParams'];
 
-function UsuarioService ($http, config){
+function UsuarioService ($http, configParams){
 
     this.listar = _listar
     this.cadastrar = _cadastrar
@@ -13,7 +13,7 @@ function UsuarioService ($http, config){
 
 
     function _listar (){
-        return $http.get(config.usuarioUrl).then(response => {
+        return $http.get(configParams.usuarioUrl).then(response => {
           return response.data;
         }).catch(data => {
             window.alert('Erro ao listar usuários: ' + data);
@@ -21,7 +21,7 @@ function UsuarioService ($http, config){
     }
 
     function _cadastrar(usuario) {
-        return $http.post(`${config.usuarioUrl}`, usuario)
+        return $http.post(`${configParams.usuarioUrl}`, usuario)
             .then(response => {
                 window.alert("Usuário cadastrado com sucesso");
                 return response.data;
@@ -32,7 +32,7 @@ function UsuarioService ($http, config){
     }
 
     function _editar(usuario) {
-        return $http.put(`${config.usuarioUrl}/${usuario.id}`, usuario)
+        return $http.put(`${configParams.usuarioUrl}/${usuario.id}`, usuario)
             .then(() => {
                 window.alert("Usuário editado com sucesso");
             })
@@ -42,7 +42,7 @@ function UsuarioService ($http, config){
     }
 
     function _deletar(id) {
-        return $http.delete(`${config.usuarioUrl}/${id}`)
+        return $http.delete(`${configParams.usuarioUrl}/${id}`)
             .then(() => {
                 window.alert("Usuário deletado com sucesso");
 
@@ -53,7 +53,7 @@ function UsuarioService ($http, config){
     }
 
     function _consultar(id) {
-        return $http.get(`${config.usuarioUrl}/${id}`)
+        return $http.get(`${configParams.usuarioUrl}/${id}`)
             .then(response =>{
                 return response.data;
             });
