@@ -3,10 +3,6 @@ angular.module('TreinamentoApp')
 
 function Ativo(){
     return function (isAtivo){
-        if (isAtivo===true){
-            return "Sim";
-        } else{
-            return "Não";
-        }
+        return isAtivo === true ? "Sim" : "Não";
     }
 }
