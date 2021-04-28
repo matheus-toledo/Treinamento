@@ -2,14 +2,11 @@ angular.module("TreinamentoApp")
     .controller("CursoIncluirController", CursoIncluirController);
 
 
-CursoIncluirController.$inject = ['$scope', '$http', '$state', 'CursoService', 'UsuarioService', 'MateriaService', 'EscolaService','configParams'];
+CursoIncluirController.$inject = ['$scope', '$http', '$state', 'CursoService', 'UsuarioService', 'MateriaService', 'EscolaService'];
 
-function CursoIncluirController($scope, $http, $state, CursoService, UsuarioService, MateriaService, EscolaService,configParams) {
+function CursoIncluirController($scope, $http, $state, CursoService, UsuarioService, MateriaService, EscolaService,) {
 
     $scope.incluir = _incluir;
-    $scope.cursoDescricaoMaxLength = configParams.nomeMaxLength;
-    $scope.cursoSiglaMaxLength = configParams.cursoSiglaMaxLength;
-    $scope.cursoNomeMaxLength = configParams.cursoNomeMaxLength;
     $scope.curso = {};
     $scope.usuarios = [];
     $scope.escolas = [];

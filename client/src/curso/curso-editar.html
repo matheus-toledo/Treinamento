@@ -9,23 +9,23 @@
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome (Até 255 caracteres)</label>
-                            <input type="text" class="form-control" id="nome" name="nome" maxlength={{nomeMaxLength}} required ng-model="curso.nome">
-
+                            <input type="text" maxlength="255" class="form-control" id="nome" name="nome" required ng-model="curso.nome" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,254}$/">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="sigla">Sigla (Até 5 caracteres)</label>
-                            <input maxlength="{{cursoSiglaMaxLength}}" type="text" class="form-control" id="sigla" name="sigla" required ng-model="curso.sigla">
-
+                            <input maxlength="5" type="text" class="form-control" id="sigla" name="sigla" required ng-model="curso.sigla" ng-pattern="/^[A-Z]{1,5}$/">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="coordenador">Coordenador</label>
-                            <select id="coordenador" name="coordenador" class="form-control" ng-options="usuario.id for usuario in usuarios track by usuario.id" ng-model="curso.coordenador" required>
+                            <select id="coordenador" name="coordenador" class="form-control" ng-model="curso.coordenador.id" required>
+                                <option value="" ng-if="false"></option>
+                                <option ng-repeat="usuario in usuarios" ng-value="usuario.id">{{usuario.nome}}</option>
                             </select>
                         </div>
                     </div>
@@ -42,8 +42,9 @@
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="materias">Materias</label>
-                            <select multiple id="materias" name="materias" class="form-control" ng-options="materia.id for materia in materias" ng-model="curso.materias" required>
+                            <select multiple id="materias" name="materias" class="form-control" ng-model="cursoMateriasId" required>
                                 <option value="" ng-if="false"></option>
+                                <option ng-repeat="materia in materias" ng-value="materia.id" ng-selected="cursoMateriasId.indexOf(materia.id) !=-1">{{materia.nome}}</option>
                             </select>
                         </div>
                     </div>
@@ -51,7 +52,7 @@
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="descricao">Descrição (Até 2500 caracteres)</label>
-                            <textarea maxlength="{{cursoDescricaoMaxLength}}" class="form-control" id="descricao" name="descricao" required ng-model="curso.descricao"></textarea>
+                            <textarea maxlength="2500" class="form-control" id="descricao" name="descricao" required ng-model="curso.descricao" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,2499}$/"></textarea>
                         </div>
                     </div>
 
