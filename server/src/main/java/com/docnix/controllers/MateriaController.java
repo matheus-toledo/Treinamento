@@ -3,9 +3,13 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Materia;
 
+import com.docnix.errorHandler.ErrorMessage;
 import com.docnix.service.MateriaService;
+import org.hibernate.HibernateException;
 
+import org.hibernate.exception.ConstraintViolationException;
 
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,12 +35,12 @@ public class MateriaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response inserirMateria(Materia materia) {
-        if (materia.getProfessor()==null){
+        if (materia.getProfessor() == null) {
             return Response.status(400).build();
         }
 
-        if (materia.getDescricao().length()>2500){
-            materia.setDescricao(materia.getDescricao().substring(0,2499));
+        if (materia.getDescricao().length() > 2500) {
+            materia.setDescricao(materia.getDescricao().substring(0, 2499));
         }
 
         return Response.status(Response.Status.CREATED).entity(materiaService.inserir(materia)).build();
@@ -54,8 +58,19 @@ public class MateriaController {
     @DELETE
     @Path("/{id}")
     public Response deletaMateria(@PathParam("id") Long id) {
-        materiaService.deletar(id);
-        return Response.ok().build();
+        try {
+            materiaService.deletar(id);
+            return Response.ok().build();
+        } catch (Exception ex) {
+            ErrorMessage errorMessage = new ErrorMessage();
+
+            if (ex.getCause() instanceof ConstraintViolationException){
+                errorMessage.setErrorMessage("A matéria não pode ser deletada pois existe um curso com essa matéria");
+            }
+
+            return Response.serverError().entity(errorMessage).build();
+        }
+
     }
 
 }

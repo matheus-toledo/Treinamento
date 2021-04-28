@@ -23,7 +23,9 @@ function MateriaListarController($scope, $http, $state, MateriaService) {
         if (confirm(`Deseja deletar a matéria ${nome}?`)) {
             MateriaService.deletar(id).then(() => {
                 _atualizar(id);
-            });
+            }).catch(()=>{
+
+            })
         }
     }
 

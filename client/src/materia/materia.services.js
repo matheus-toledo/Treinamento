@@ -47,7 +47,8 @@ function MateriaService ($http, configParams){
                 window.alert("Matéria deletada com sucesso");
 
             }).catch(reject => {
-                window.alert("Erro ao tentar deletar matéria " + reject.message);
+                window.alert(reject.data.errorMessage);
+                throw "erro"
             });
 
     }

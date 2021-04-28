@@ -10,14 +10,14 @@
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome (Até 255 caracteres)</label>
-                            <input type="text" maxlength="255" class="form-control" id="nome" name="nome" required ng-model="materia.nome" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,252}$/">
+                            <input type="text" maxlength="255" class="form-control" id="nome" name="nome" required ng-model="materia.nome" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,254}$/">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-6 mb-3">
                             <label for="descricao">Descrição (Até 2500 caracteres)</label>
-                            <textarea maxlength="2500" class="form-control" id="descricao" name="descricao" required ng-model="materia.descricao" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,252}$/"></textarea>
+                            <textarea maxlength="2500" class="form-control" id="descricao" name="descricao" required ng-model="materia.descricao" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,2499}$/"></textarea>
                         </div>
                     </div>
 
@@ -26,7 +26,7 @@
                             <label for="professor">Professor</label>
                             <select id="professor" name="professor" class="form-control" ng-model="materia.professor.id" required>
                                 <option value="" ng-if="false"></option>
-                                <option ng-repeat="usuario in usuarios" ng-value="usuario.id"></option>
+                                <option ng-repeat="usuario in usuarios" ng-value="usuario.id">{{usuario.nome}}</option>
                             </select>
                         </div>
                     </div>
