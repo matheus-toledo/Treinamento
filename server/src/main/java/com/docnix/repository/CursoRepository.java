@@ -17,23 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class CursoRepository {
-    public Curso salvar(Curso curso) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(curso);
-        session.getTransaction().commit();
-        session.close();
-        return curso;
-    }
+public class CursoRepository extends BaseRepository<Curso> {
 
-    public Curso obter(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        Curso curso = session.get(Curso.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return curso;
+    public CursoRepository() {
+        super(Curso.class);
     }
 
     public List<Curso> listar() {
@@ -78,29 +65,6 @@ public class CursoRepository {
         });
 
         return cursos;
-    }
-
-    public Curso editar(Curso curso) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(curso);
-        session.getTransaction().commit();
-        session.close();
-        return curso;
-    }
-
-    public void deletar(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Curso curso = session.get(Curso.class, id);
-        if (curso != null) {
-            session.delete(curso);
-        }
-
-        session.getTransaction().commit();
-        session.close();
-
     }
 
 }

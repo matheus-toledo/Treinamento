@@ -4,29 +4,15 @@ import com.docnix.config.HibernateConfig;
 import com.docnix.entity.Aluno;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 
 import java.util.List;
 
-public class AlunoRepository {
+public class AlunoRepository extends BaseRepository<Aluno> {
 
-    public Aluno salvar(Aluno aluno) {
-
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(aluno);
-        session.getTransaction().commit();
-        session.close();
-
-        return aluno;
-    }
-
-    public Aluno obter(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        Aluno aluno = session.get(Aluno.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return aluno;
+    public AlunoRepository() {
+        super(Aluno.class);
     }
 
     public List<Aluno> listar() {
@@ -34,28 +20,6 @@ public class AlunoRepository {
         Criteria criteria = session.createCriteria(Aluno.class);
 
         return (List<Aluno>) criteria.list();
-    }
-
-    public Aluno editar(Aluno aluno) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(aluno);
-        session.getTransaction().commit();
-        session.close();
-        return aluno;
-    }
-
-    public void deletar(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Aluno aluno = session.get(Aluno.class, id);
-        if (aluno != null) {
-            session.delete(aluno);
-        }
-
-        session.getTransaction().commit();
-        session.close();
     }
 
 }

@@ -11,25 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MateriaRepository {
-    public Materia salvar(Materia materia) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(materia);
-        session.getTransaction().commit();
-        session.close();
-        return materia;
+public class MateriaRepository extends BaseRepository<Materia>{
+    public MateriaRepository(){
+        super(Materia.class);
     }
-
-    public Materia obter(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        Materia materia = session.get(Materia.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return materia;
-    }
-
     public List<Materia> listar() {
         Session session = HibernateConfig.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Materia.class, "bean");
@@ -58,29 +43,6 @@ public class MateriaRepository {
         });
 
         return materias;
-    }
-
-    public Materia editar(Materia materia) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(materia);
-        session.getTransaction().commit();
-        session.close();
-        return materia;
-    }
-
-    public void deletar(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Materia materia = session.get(Materia.class, id);
-        if (materia != null) {
-            session.delete(materia);
-        }
-
-        session.getTransaction().commit();
-        session.close();
-
     }
 
 }

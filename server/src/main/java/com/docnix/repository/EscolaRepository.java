@@ -13,24 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class EscolaRepository {
-
-    public Escola salvar(Escola escola) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(escola);
-        session.getTransaction().commit();
-        session.close();
-        return escola;
-    }
-
-    public Escola obter(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        Escola usuario = session.get(Escola.class, id);
-        session.getTransaction().commit();
-        session.close();
-        return usuario;
+public class EscolaRepository extends BaseRepository<Escola> {
+    public EscolaRepository() {
+        super(Escola.class);
     }
 
     public List<Escola> listar() {
@@ -65,29 +50,6 @@ public class EscolaRepository {
         });
 
         return escolas;
-    }
-
-    public Escola editar(Escola escola) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(escola);
-        session.getTransaction().commit();
-        session.close();
-        return escola;
-    }
-
-    public void deletar(Long id) {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Escola usuario = session.get(Escola.class, id);
-        if (usuario != null) {
-            session.delete(usuario);
-        }
-
-        session.getTransaction().commit();
-        session.close();
-
     }
 
 }
