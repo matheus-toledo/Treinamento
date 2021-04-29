@@ -2,7 +2,9 @@ package com.docnix.controllers;
 
 
 import com.docnix.entity.Escola;
+import com.docnix.errorHandler.ErrorMessage;
 import com.docnix.service.EscolaService;
+import org.hibernate.exception.ConstraintViolationException;
 
 
 import javax.ws.rs.*;
@@ -30,21 +32,21 @@ public class EscolaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response inserirEscola(Escola escola) {
-        if (escola.getDiretor()==null){
+        if (escola.getDiretor() == null) {
             return Response.status(400).build();
         }
 
-        if (escola.getNome().length()>255){
-            escola.setNome(escola.getNome().substring(0,254));
+        if (escola.getNome().length() > 255) {
+            escola.setNome(escola.getNome().substring(0, 254));
         }
 
-        if (escola.getDescricao().length()>300){
-            escola.setDescricao(escola.getDescricao().substring(0,299));
+        if (escola.getDescricao().length() > 300) {
+            escola.setDescricao(escola.getDescricao().substring(0, 299));
         }
 
-        try{
+        try {
             return Response.status(Response.Status.CREATED).entity(escolaService.inserir(escola)).build();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             return Response.serverError().build();
         }
 
@@ -61,8 +63,22 @@ public class EscolaController {
     @DELETE
     @Path("/{id}")
     public Response deletarEscola(@PathParam("id") Long id) {
-        escolaService.deletar(id);
-        return Response.ok().build();
+
+        try {
+            escolaService.deletar(id);
+            return Response.ok().build();
+
+        } catch (Exception ex) {
+            ErrorMessage errorMessage = new ErrorMessage();
+
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                errorMessage.setErrorMessage("A escola não pode ser deletada pois está sendo usada em algum curso");
+            } else {
+                errorMessage.setErrorMessage("Erro ao tentar deletar escola");
+            }
+
+            return Response.serverError().entity(errorMessage).build();
+        }
     }
 
 }

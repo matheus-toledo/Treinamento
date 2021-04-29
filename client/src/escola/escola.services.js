@@ -54,7 +54,8 @@ function EscolaService($http, configParams) {
                 window.alert("Escola deletada com sucesso");
 
             }).catch(reject => {
-                window.alert("Erro ao tentar deletar escola: " + reject.message);
+                window.alert(reject.data.errorMessage);
+                throw new Error();
             });
 
     }

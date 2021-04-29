@@ -23,7 +23,9 @@ function EscolaListarController($scope, $http, $state, EscolaService) {
         if (confirm(`Deseja deletar a escola: ${nome}?`)) {
             EscolaService.deletar(id).then(() => {
                 _atualizar(id);
-            })
+            }).catch(()=>{
+
+            });
         }
     }
 

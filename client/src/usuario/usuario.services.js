@@ -47,7 +47,8 @@ function UsuarioService ($http, configParams){
                 window.alert("Usuário deletado com sucesso");
 
             }).catch(reject => {
-                window.alert("Erro ao tentar deletar usuário " + reject.message);
+                window.alert(reject.data.errorMessage);
+                throw new Error();
             });
 
     }

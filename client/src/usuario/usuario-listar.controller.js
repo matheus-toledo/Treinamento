@@ -21,7 +21,9 @@ function UsuarioListarController($scope, $http, $state, UsuarioService) {
         if (confirm(`Deseja deletar o usuário ${nome}?`)) {
             UsuarioService.deletar(id).then(() => {
                 _atualizar(id);
-            });
+            }).catch(() =>{
+
+            })
         }
     }
 
