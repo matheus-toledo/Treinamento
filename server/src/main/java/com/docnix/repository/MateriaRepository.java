@@ -11,12 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MateriaRepository extends BaseRepository<Materia>{
-    public MateriaRepository(){
+public class MateriaRepository extends BaseRepository<Materia> {
+    public MateriaRepository() {
         super(Materia.class);
     }
+
     public List<Materia> listar() {
-        Session session = HibernateConfig.getSessionFactory().openSession();
+        this.session = HibernateConfig.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Materia.class, "bean");
         criteria.createAlias("bean.professor", "professorMateria");
         ProjectionList projectionList = Projections.projectionList();
@@ -31,18 +32,21 @@ public class MateriaRepository extends BaseRepository<Materia>{
 
         List<Materia> materias = new ArrayList<>();
 
-        result.forEach(row -> {
-            Usuario professor = new Usuario();
-            professor.setNome((String) row.get("professor.nome"));
-            Materia materia = new Materia();
-            materia.setId((Long) row.get("id"));
-            materia.setNome((String) row.get("nome"));
-            materia.setDescricao((String) row.get("descricao"));
-            materia.setProfessor(professor);
-            materias.add(materia);
-        });
+        result.forEach(elem -> materias.add(materiaBuilder(elem)));
 
         return materias;
+    }
+
+    private Materia materiaBuilder(Map<String, Object> elem) {
+        Usuario professor = new Usuario();
+        professor.setNome((String) elem.get("professor.nome"));
+        Materia materia = new Materia();
+        materia.setId((Long) elem.get("id"));
+        materia.setNome((String) elem.get("nome"));
+        materia.setDescricao((String) elem.get("descricao"));
+        materia.setProfessor(professor);
+
+        return materia;
     }
 
 }
