@@ -39,23 +39,23 @@ public class TurmaRepository extends BaseRepository<Turma> {
 
         List<Turma> turmas = new ArrayList<>();
 
-        result.forEach(elem -> {
-            Turma turma = new Turma();
-            Curso curso = new Curso();
-
-            curso.setId((Long) elem.get("cursoId"));
-            curso.setNome((String) elem.get("cursoNome"));
-
-            turma.setId((Long) elem.get("id"));
-            turma.setNome((String) elem.get("nome"));
-            turma.setMatricula((String) elem.get("matricula"));
-            turma.setCurso(curso);
-
-            turmas.add(turma);
-
-        });
+        result.forEach(elem -> turmas.add(turmaBuilder(elem)));
 
         return turmas;
+    }
+
+    private Turma turmaBuilder(Map<String, Object> elem) {
+        Turma turma = new Turma();
+        Curso curso = new Curso();
+
+        curso.setId((Long) elem.get("cursoId"));
+        curso.setNome((String) elem.get("cursoNome"));
+
+        turma.setId((Long) elem.get("id"));
+        turma.setNome((String) elem.get("nome"));
+        turma.setMatricula((String) elem.get("matricula"));
+        turma.setCurso(curso);
+        return turma;
     }
 
     public Optional<Long> consultarMaiorSequencia(Turma turma) {

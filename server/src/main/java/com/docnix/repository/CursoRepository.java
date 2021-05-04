@@ -46,25 +46,28 @@ public class CursoRepository extends BaseRepository<Curso> {
 
         List<Curso> cursos = new ArrayList<>();
 
-        result.forEach(item -> {
-            Curso curso = new Curso();
-            Usuario usuario = new Usuario();
-            Escola escola = new Escola();
-            usuario.setId((Long) item.get("coordenador.id"));
-            usuario.setNome((String) item.get("coordenador.nome"));
-
-            escola.setNome((String) item.get("escola.nome"));
-
-            curso.setId((Long) item.get("id"));
-            curso.setCoordenador(usuario);
-            curso.setSigla((String) item.get("sigla"));
-            curso.setNome((String) item.get("nome"));
-            curso.setDescricao((String) item.get("descricao"));
-            curso.setEscola(escola);
-            cursos.add(curso);
-        });
+        result.forEach(item -> cursos.add(cursoBuilder(item)));
 
         return cursos;
+    }
+
+    private Curso cursoBuilder(Map<String, Object> item) {
+        Curso curso = new Curso();
+        Usuario usuario = new Usuario();
+        Escola escola = new Escola();
+        usuario.setId((Long) item.get("coordenador.id"));
+        usuario.setNome((String) item.get("coordenador.nome"));
+
+        escola.setNome((String) item.get("escola.nome"));
+
+        curso.setId((Long) item.get("id"));
+        curso.setCoordenador(usuario);
+        curso.setSigla((String) item.get("sigla"));
+        curso.setNome((String) item.get("nome"));
+        curso.setDescricao((String) item.get("descricao"));
+        curso.setEscola(escola);
+
+        return curso;
     }
 
 }
