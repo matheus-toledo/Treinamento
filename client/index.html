@@ -25,10 +25,10 @@
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".aluno">Aluno</h4>
+                </a>
                 <ul class="nav flex-column">
-                    <a href="">
-                        <h4 class="nav-link active" data-toggle="collapse" data-target=".aluno">Aluno</h4>
-                    </a>
                     <li class="nav-item collapse aluno">
                         <a class="nav-link" ui-sref="alunoListar">
                             <span data-feather="home"></span>
@@ -36,10 +36,11 @@
                         </a>
                     </li>
                 </ul>
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".usuario">Usuário</h4>
+                </a>
                 <ul class="nav flex-column">
-                    <a href="">
-                        <h4 class="nav-link active" data-toggle="collapse" data-target=".usuario">Usuário</h4>
-                    </a>
+
                     <li class="nav-item collapse usuario">
                         <a class="nav-link" ui-sref="usuarioListar">
                             <span data-feather="home"></span>
@@ -47,10 +48,11 @@
                         </a>
                     </li>
                 </ul>
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".escola">Escola</h4>
+                </a>
                 <ul class="nav flex-column">
-                    <a href="">
-                        <h4 class="nav-link active" data-toggle="collapse" data-target=".escola">Escola</h4>
-                    </a>
+
                     <li class="nav-item collapse escola">
                         <a class="nav-link" ui-sref="escolaListar">
                             <span data-feather="home"></span>
@@ -58,10 +60,10 @@
                         </a>
                     </li>
                 </ul>
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".materia">Matéria</h4>
+                </a>
                 <ul class="nav flex-column">
-                    <a href="">
-                        <h4 class="nav-link active" data-toggle="collapse" data-target=".materia">Matéria</h4>
-                    </a>
                     <li class="nav-item collapse materia">
                         <a class="nav-link" ui-sref="materiaListar">
                             <span data-feather="home"></span>
@@ -69,14 +71,24 @@
                         </a>
                     </li>
                 </ul>
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".curso">Curso</h4>
+                </a>
                 <ul class="nav flex-column">
-                    <a href="">
-                        <h4 class="nav-link active" data-toggle="collapse" data-target=".curso">Curso</h4>
-                    </a>
                     <li class="nav-item collapse curso">
                         <a class="nav-link" ui-sref="cursoListar">
                             <span data-feather="home"></span>
                             Listar Cursos<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <a href="">
+                    <h4 class="nav-link active" data-toggle="collapse" data-target=".turma">Turma</h4>
+                </a>
+                <ul class="nav flex-column">
+                    <li class="nav-item collapse turma">
+                        <a class="nav-link" ui-sref="turmaListar">
+                            Listar Cursos
                         </a>
                     </li>
                 </ul>
@@ -125,6 +137,12 @@
 <script src="./src/curso/curso-incluir.controller.js"></script>
 <script src="./src/curso/curso-editar.controller.js"></script>
 <script src="./src/curso/curso-listar.controller.js"></script>
+<script src="./src/turma/turma.route.js"></script>
+<script src="./src/turma/turma.service.js"></script>
+<script src="./src/turma/turma-listar.controller.js"></script>
+<script src="./src/turma/turma-incluir.controller.js"></script>
+<script src="./src/turma/turma-editar.controller.js"></script>
 <script src="src/filters/ativoFilter.js"></script>
+<script src="./src/directives/inputText.directive.js"></script>
 </body>
 </html>

@@ -4,5 +4,5 @@ angular.module("TreinamentoApp").value("configParams", {
     escolaUrl: "http://localhost:8080/api/escolas",
     materiaUrl: "http://localhost:8080/api/materias",
     cursoUrl: "http://localhost:8080/api/cursos",
-
+    turmaUrl:"http://localhost:8080/api/turmas"
 })
