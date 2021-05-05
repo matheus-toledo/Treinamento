@@ -3,6 +3,8 @@ package com.docnix.repository;
 import com.docnix.config.HibernateConfig;
 import org.hibernate.Session;
 
+import java.util.Optional;
+
 public abstract class BaseRepository<T> {
 
     protected Session session;
@@ -48,9 +50,7 @@ public abstract class BaseRepository<T> {
         Object object = obter(id);
         this.session = HibernateConfig.getSessionFactory().openSession();
         this.session.beginTransaction();
-        if (object != null) {
-            session.delete(object);
-        }
+        Optional.ofNullable(object).ifPresent(presentObject->session.delete(presentObject));
         session.getTransaction().commit();
         session.close();
     }

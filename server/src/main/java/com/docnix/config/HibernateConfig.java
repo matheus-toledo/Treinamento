@@ -21,6 +21,7 @@ public class HibernateConfig {
         config.addAnnotatedClass(Escola.class);
         config.addAnnotatedClass(Materia.class);
         config.addAnnotatedClass(Curso.class);
+        config.addAnnotatedClass(Turma.class);
         sessionFactory = config.buildSessionFactory();
     }
 

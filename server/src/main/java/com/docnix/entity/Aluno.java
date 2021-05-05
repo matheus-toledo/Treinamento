@@ -2,6 +2,7 @@ package com.docnix.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "TRE_ALUNO")
@@ -28,12 +29,11 @@ public class Aluno {
     @Column(name = "data_matricula", nullable = false)
     private Date dataDaMatricula;  //ISO 8601
 
-    public Aluno(String nome, String email, Integer idade, String matricula) {
-        this.nome = nome;
-        this.email = email;
-        this.idade = idade;
-        this.matricula = matricula;
-    }
+    @ManyToMany(mappedBy = "alunos")
+    private Set<Turma> turmas;
+
+    @Column(name = "sequencia_turma")
+    private Long sequencia;
 
     public Aluno() {
     }
@@ -86,5 +86,20 @@ public class Aluno {
         this.dataDaMatricula = dataDaMatricula;
     }
 
+    public Set<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(Set<Turma> turmas) {
+        this.turmas = turmas;
+    }
+
+    public Long getSequencia() {
+        return sequencia;
+    }
+
+    public void setSequencia(Long sequencia) {
+        this.sequencia = sequencia;
+    }
 
 }

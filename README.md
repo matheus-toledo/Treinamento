@@ -148,4 +148,15 @@ Mesmas telas de Aluno (listar, editar e incluir)
 - lista de matérias (Set<Materia>) 
   - estudar collections em java
 - descrição = máximo 2500 caracteres# Treinamento_Escola
-# Treinamento_Escola
+
+[ ] - Criar entidade de Turma
+- id
+- nome
+- matricula (Sigla do curso - 0000)
+- curso (Curso)
+- alunos (List<Aluno>)
+  
+[ ] - Alterar entidade de Aluno
+- Mesmos atributos
+- Matricula (Sigla da Turma - 0)
+- Turma (Turma)
