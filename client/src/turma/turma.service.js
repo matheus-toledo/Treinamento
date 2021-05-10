@@ -1,48 +1,58 @@
 angular.module("TreinamentoApp")
-    .service("TurmaService",TurmaService);
+    .service("TurmaService", TurmaService);
 
-TurmaService.$inject = ['configParams','$http'];
+TurmaService.$inject = ['configParams', '$http'];
 
-function TurmaService(configParams, $http){
+function TurmaService(configParams, $http) {
     this.listar = listar;
     this.obter = obter;
     this.editar = editar;
     this.deletar = deletar;
+    this.listarProximasSequencias = listarProximasSequencias;
 
-    function listar(){
+    function listar() {
         return $http.get(configParams.turmaUrl)
-            .then(response =>{
+            .then(response => {
                 return response.data;
-            }).catch(err =>{
+            }).catch(err => {
                 console.log(err.data.errorMessage);
             })
     }
 
-    function obter(id){
+    function obter(id) {
         return $http.get(`${configParams.turmaUrl}/${id}`)
-            .then(response =>{
+            .then(response => {
                 return response.data;
-            }).catch(err =>{
+            }).catch(err => {
                 console.log(err.data.errorMessage);
             })
     }
 
-    function editar(turma){
-        return $http.put(`${configParams.turmaUrl}/${turma.id}`,turma)
-            .then(()=>{
+    function editar(turma) {
+        return $http.put(`${configParams.turmaUrl}/${turma.id}`, turma)
+            .then(() => {
                 console.log('Turma editada com sucesso');
             })
-            .catch(err =>{
+            .catch(err => {
                 console.log(err.data.errorMessage);
             })
     }
 
-    function deletar(){
+    function deletar() {
         return $http.get(configParams.turmaUrl)
-            .then(()=>{
+            .then(() => {
                 console.log('Turma deletada com sucesso');
             })
-            .catch(err =>{
+            .catch(err => {
+                console.log(err.data.errorMessage);
+            });
+    }
+
+    function listarProximasSequencias() {
+        return $http.get(`${configParams.turmaUrl}/sequencia`)
+            .then(response => {
+                return response.data;
+            }).catch(err => {
                 console.log(err.data.errorMessage);
             });
     }

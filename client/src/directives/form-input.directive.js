@@ -4,7 +4,7 @@ angular.module("TreinamentoApp")
 
 function formInput() {
     return {
-        templateUrl: '../client/src/view/formInput.html',
+        templateUrl: './src/directives/form-input.html',
         restrict: 'E',
         scope: {
             id: "@",
@@ -12,6 +12,7 @@ function formInput() {
             type: "@",
             ngModel: "=",
             max: "@",
+            leitura: '=?',
             ngPattern: "@?"
         },
         link: function (scope) {

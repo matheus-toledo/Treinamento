@@ -1,0 +1,21 @@
+<main role="main">
+    <div class="pb-2 mb-3 border-bottom">
+        <h1 class="h2">Cadastro de Turmas</h1>
+    </div>
+    <div class="col-12">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 order-md-1 mb-5 offset-3">
+                {{turma | json}}
+                <form role="form" class="was-validated" name="turmaIncluirForm" ng-submit="turmaIncluirForm.$valid && incluir()" novalidate>
+
+                    <form-input type="text" id="Nome" label="Nome" ng-model="turma.nome"></form-input>
+                    <form-select-curso id="Curso" default-option="--Selecione um curso--" label="Curso" ng-model="turma.curso"></form-select-curso>
+
+                    <form-input-turma-matricula type="text" leitura="true" id="Matricula" label="Matricula" ng-model="turma.matricula" sigla="turma.curso.sigla"></form-input-turma-matricula>
+                    <form-select-alunos id="Alunos" ng-multiple="multiple" label="Alunos" ng-model="turma.alunos"></form-select-alunos>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+

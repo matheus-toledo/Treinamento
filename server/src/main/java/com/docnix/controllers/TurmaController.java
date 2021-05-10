@@ -24,6 +24,13 @@ public class TurmaController {
         return Response.ok().entity(turmaService.obter(id)).build();
     }
 
+    @GET
+    @Path("/sequencia")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSequencias(){
+        return Response.accepted(turmaService.listarSequencias()).build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

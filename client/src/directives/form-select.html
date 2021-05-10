@@ -1,0 +1,15 @@
+<div class="form-group">
+    <div class="col-md-6 mb-3">
+        <label for="{{id}}">{{label}}</label>
+        <select ng-if="ngMultiple === 'multiple'" multiple id="{{id}}" name="{{id}}" class="form-control" ng-model="ngModel" required>
+            <option ng-repeat="option in options" ng-value="option">{{option.nome}}</option>
+        </select>
+        <select ng-if="ngMultiple !== 'multiple'" id="{{id}}" name="{{id}}" class="form-control" ng-model="ngModel.id" required>
+            <option ng-value="">{{defaultOption}}</option>
+            <option ng-repeat="option in options"
+                    ng-value="option.id">{{option.nome}}
+            </option>
+        </select>
+
+    </div>
+</div>
