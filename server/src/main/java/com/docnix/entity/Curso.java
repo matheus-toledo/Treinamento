@@ -21,7 +21,7 @@ public class Curso {
     @JoinColumn(name = "id_coordenador_curso", nullable = false)
     private Usuario coordenador;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TRE_MATERIA_CURSO",
             joinColumns = @JoinColumn(name = "id_curso"),
             inverseJoinColumns = @JoinColumn(name = "id_materia"))
