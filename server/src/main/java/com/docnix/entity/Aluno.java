@@ -22,15 +22,16 @@ public class Aluno {
     @Column(name = "idade", nullable = false)
     private Integer idade;
 
-    @Column(name = "matricula", nullable = false)
+    @Column(name = "matricula")
     private String matricula;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_matricula", nullable = false)
     private Date dataDaMatricula;  //ISO 8601
 
-    @ManyToMany(mappedBy = "alunos")
-    private Set<Turma> turmas;
+    @ManyToOne
+    @JoinColumn(name = "id_turma")
+    private Turma turma;
 
     @Column(name = "sequencia_turma")
     private Long sequencia;
@@ -86,12 +87,12 @@ public class Aluno {
         this.dataDaMatricula = dataDaMatricula;
     }
 
-    public Set<Turma> getTurmas() {
-        return turmas;
+    public Turma getTurma() {
+        return turma;
     }
 
-    public void setTurmas(Set<Turma> turmas) {
-        this.turmas = turmas;
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     public Long getSequencia() {
