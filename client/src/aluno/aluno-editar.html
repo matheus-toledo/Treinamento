@@ -6,33 +6,10 @@
         <div class="row mb-5">
             <div class="col-md-8 order-md-1 mb-5 offset-4">
                 <form role="form" class="was-validated" name="alunoEditarForm" ng-submit="editar()" novalidate>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="firstName">Nome</label>
-                            <input type="text" class="form-control" id="firstName" name="nome" placeholder="" required ng-model="aluno.nome">
-                        </div>
-                    </div>
+                    <form-input type="text" id="nome" label="Nome" ng-model="aluno.nome"></form-input>
+                    <form-input type="email" id="email" label="Email" ng-model="aluno.email"></form-input>
+                    <form-input type="number" id="idade" label="Idade" ng-model="aluno.idade"></form-input>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="email">E-mail</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="" required ng-model="aluno.email">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="idade">Idade</label>
-                            <input type="number" class="form-control" id="idade" name="idade" placeholder="" required ng-model="aluno.idade">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="matricula">Matrícula</label>
-                            <input type="text" class="form-control" id="matricula" name="matricula" placeholder="" required ng-model="aluno.matricula">
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-3">

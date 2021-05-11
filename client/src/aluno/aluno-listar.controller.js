@@ -1,15 +1,15 @@
 angular.module("TreinamentoApp")
     .controller("AlunoListarControler", AlunoListarControler);
 
-AlunoListarControler.$inject = ['$scope', '$http', '$state','config','AlunoService'];
+AlunoListarControler.$inject = ['$scope', '$http', '$state','AlunoService'];
 
-function AlunoListarControler($scope, $http, $state,config, AlunoService) {
-    $scope.editar = _editar;
-    $scope.deletar = _deletar;
+function AlunoListarControler($scope, $http, $state, AlunoService) {
+    $scope.editar = editar;
+    $scope.deletar = deletar;
 
     _inicializar();
 
-    /////////////////////////////////////////////
+    ///////////////////////////////////
 
     function _inicializar() {
         _listar();
@@ -19,7 +19,7 @@ function AlunoListarControler($scope, $http, $state,config, AlunoService) {
         $scope.alunos = $scope.alunos.filter(aluno => aluno.id !== id);
     }
 
-    function _deletar(nome,id) {
+    function deletar(nome,id) {
         if (confirm(`Deseja deletar o aluno ${nome}?`)) {
             AlunoService.deletar(id).then(()=>{
                 _atualizar(id);
@@ -27,7 +27,7 @@ function AlunoListarControler($scope, $http, $state,config, AlunoService) {
         }
     }
 
-    function _editar(id) {
+    function editar(id) {
         $state.go('alunoEditar', {id:id});
     }
 
