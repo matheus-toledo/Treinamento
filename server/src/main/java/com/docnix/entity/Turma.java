@@ -25,11 +25,7 @@ public class Turma {
     @JoinColumn(name = "id_turma_curso",nullable = false)
     private Curso curso;
 
-    @ManyToMany
-    @JoinTable(name = "TRE_TURMA_ALUNOS",
-            joinColumns = @JoinColumn(name = "id_turma"),
-            inverseJoinColumns = @JoinColumn(name = "id_aluno"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"id_turma","id_aluno"}))
+    @OneToMany(mappedBy = "turma")
     private Set<Aluno> alunos;
 
     public Turma() {
