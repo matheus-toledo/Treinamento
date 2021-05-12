@@ -21,14 +21,9 @@ public class TurmaService {
         turma.setSequencia(result + 1);
     }
 
-    public List listarSequencias(){
-        List listaSequencias= turmaRepository.listarSequencias();
-        return gerarProximaSequencia(listaSequencias);
-    }
-
-    private List gerarProximaSequencia(List<Map<String,Object>> listaSequencias){
-        listaSequencias.forEach(elem->elem.replace("sequencial",(Long)elem.get("sequencial")+1));
-        return listaSequencias;
+    public Long gerarSequencia(String sigla){
+        Long result= turmaRepository.consultarMaiorSequencia(sigla).orElse(1L);
+        return result;
     }
 
     public Turma obter(Long id){

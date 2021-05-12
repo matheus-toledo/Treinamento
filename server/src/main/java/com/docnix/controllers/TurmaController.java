@@ -25,10 +25,10 @@ public class TurmaController {
     }
 
     @GET
-    @Path("/sequencia")
+    @Path("/sequencia/{sigla}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSequencias(){
-        return Response.accepted(turmaService.listarSequencias()).build();
+    public Response getSequencia(@PathParam("sigla") String sigla){
+        return Response.accepted(turmaService.gerarSequencia(sigla)).build();
     }
 
     @POST

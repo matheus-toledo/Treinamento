@@ -69,18 +69,16 @@ public class TurmaRepository extends BaseRepository<Turma> {
         return result == null ? Optional.empty() : Optional.of(result);
     }
 
-    public List listarSequencias() {
-
-        return HibernateConfig.getSessionFactory().openSession()
+    public Optional<Long> consultarMaiorSequencia(String sigla) {
+        Long result = (Long) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
                 .createAlias("bean.curso", "turmaCurso")
-                .setProjection(Projections.projectionList()
-                        .add(Projections.property("turmaCurso.sigla").as("sigla"))
-                        .add(Projections.max("bean.sequencia").as("sequencial"))
-                        .add(Projections.groupProperty("turmaCurso.sigla")))
-                .setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
-                .list();
+                .add(Restrictions.eq("turmaCurso.sigla", sigla))
+                .setProjection(Projections.max("bean.sequencia").as("sequencia"))
+                .setMaxResults(1)
+                .uniqueResult();
 
+        return Optional.ofNullable(result);
     }
 
 

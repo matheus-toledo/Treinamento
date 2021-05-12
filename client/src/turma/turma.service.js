@@ -8,7 +8,8 @@ function TurmaService(configParams, $http) {
     this.obter = obter;
     this.editar = editar;
     this.deletar = deletar;
-    this.listarProximasSequencias = listarProximasSequencias;
+    this.incluir = incluir;
+    this.getSequencia = getSequencia;
 
     function listar() {
         return $http.get(configParams.turmaUrl)
@@ -48,8 +49,18 @@ function TurmaService(configParams, $http) {
             });
     }
 
-    function listarProximasSequencias() {
-        return $http.get(`${configParams.turmaUrl}/sequencia`)
+    function incluir (){
+        return $http.post(configParams.turmaUrl)
+            .then(() => {
+                console.log('Turma incluída com sucesso');
+            })
+            .catch(err => {
+                console.log(err.data);
+            });
+    }
+
+    function getSequencia(sigla) {
+        return $http.get(`${configParams.turmaUrl}/sequencia/${sigla}`)
             .then(response => {
                 return response.data;
             }).catch(err => {
