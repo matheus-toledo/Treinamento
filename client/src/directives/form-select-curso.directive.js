@@ -10,25 +10,36 @@ function formSelectCurso() {
             label: "@",
             ngModel: "=",
             ngMultiple: "@?",
-            defaultOption: "@",
+            sigla: "="
         },
-        controller: ['$scope', 'CursoService', function ($scope, CursoService) {
-            $scope.options = [];
-            $scope.$watch('ngModel.id', function () {
-                if ($scope.ngModel.id !== undefined && $scope.options !== undefined) {
-                    $scope.ngModel.sigla = $scope.options.find(option => option.id === $scope.ngModel.id).sigla;
-                }
-            })
-
-            _inicializar();
-
-            function _inicializar() {
-
-                CursoService.listar().then(cursosData => {
-                    $scope.options = cursosData;
-                })
-            }
-
-        }]
+        controller: formSelectCursoController
     }
+
+    formSelectCursoController.$inject = ['$scope', 'CursoService']
+
+    function formSelectCursoController($scope, CursoService) {
+
+        $scope.$watch('ngModel', _watchNgModel);
+
+        _inicializar();
+
+        function _inicializar() {
+            $scope.defaultOptionText = '--Selecione um Curso--'
+
+            $scope.options = [];
+
+            CursoService.listar().then(cursosData => {
+                $scope.options = cursosData;
+            })
+        }
+
+        function _watchNgModel(newValue) {
+            if (newValue && $scope.options) {
+                $scope.sigla = $scope.options.find(option => option.id === $scope.ngModel).sigla;
+            }
+        }
+
+
+    }
+
 }
