@@ -3,6 +3,7 @@ package com.docnix.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
@@ -32,7 +33,7 @@ public class Turma {
     @JoinColumn(name = "id_turma_curso",nullable = false)
     private Curso curso;
 
-    @OneToMany(mappedBy = "turma")
+    @OneToMany(mappedBy = "turma",fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JsonManagedReference
     private Set<Aluno> alunos = new HashSet<>();
