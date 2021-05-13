@@ -1,6 +1,7 @@
 package com.docnix.repository;
 
 import com.docnix.config.HibernateConfig;
+import com.docnix.entity.Aluno;
 import com.docnix.entity.Curso;
 import com.docnix.entity.Turma;
 import org.hibernate.Criteria;
@@ -9,13 +10,10 @@ import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TurmaRepository extends BaseRepository<Turma> {
-
     public TurmaRepository() {
         super(Turma.class);
     }
@@ -80,6 +78,4 @@ public class TurmaRepository extends BaseRepository<Turma> {
 
         return Optional.ofNullable(result);
     }
-
-
 }

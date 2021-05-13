@@ -1,18 +1,25 @@
 package com.docnix.service;
 
+import com.docnix.entity.Aluno;
 import com.docnix.entity.Turma;
 
 import com.docnix.repository.TurmaRepository;
 
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TurmaService {
     private static final TurmaRepository turmaRepository= new TurmaRepository();
+    private static final AlunoService alunoService = new AlunoService();
 
     public Turma inserir (Turma turma){
         gerarSequencia(turma);
+        turma.setAlunos(alunoService.obterAlunosEspecificosComTurma(turma.getAlunos(),turma));
+
         return  turmaRepository.salvar(turma);
     }
 

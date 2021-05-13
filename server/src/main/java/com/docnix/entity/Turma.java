@@ -1,8 +1,12 @@
 package com.docnix.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 @Entity
 @Table(name = "TRE_TURMA")
@@ -21,12 +25,17 @@ public class Turma {
     @Column(name = "sequencia")
     private Long sequencia;
 
+    @Column(name ="sigla")
+    private String sigla;
+
     @ManyToOne
     @JoinColumn(name = "id_turma_curso",nullable = false)
     private Curso curso;
 
     @OneToMany(mappedBy = "turma")
-    private Set<Aluno> alunos;
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JsonManagedReference
+    private Set<Aluno> alunos = new HashSet<>();
 
     public Turma() {
     }
@@ -77,5 +86,13 @@ public class Turma {
 
     public void setSequencia(Long sequencia) {
         this.sequencia = sequencia;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 }
