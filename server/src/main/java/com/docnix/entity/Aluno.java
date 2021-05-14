@@ -1,13 +1,7 @@
 package com.docnix.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
 
 @Entity
 @Table(name = "TRE_ALUNO")
@@ -31,18 +25,17 @@ public class Aluno {
     @Column(name = "data_matricula", nullable = false)
     private Date dataDaMatricula;  //ISO 8601
 
-    @ManyToOne
-    @JoinColumn(name = "id_turma")
-    @JsonBackReference
-    private Turma turma;
-
     @Column(name = "sequencia_turma")
     private Long sequencia;
 
-    @Transient
+    @Column(name = "matricula")
     private String matricula;
 
     public Aluno() {
+    }
+
+    public Aluno(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -78,10 +71,7 @@ public class Aluno {
     }
 
     public String getMatricula() {
-        if (turma != null) {
-            return turma.getSigla() + " - " + sequencia;
-        }
-        return null;
+        return this.matricula;
     }
 
     public void setMatricula(String matricula) {
@@ -94,14 +84,6 @@ public class Aluno {
 
     public void setDataDaMatricula(Date dataDaMatricula) {
         this.dataDaMatricula = dataDaMatricula;
-    }
-
-    public Turma getTurma() {
-        return turma;
-    }
-
-    public void setTurma(Turma turma) {
-        this.turma = turma;
     }
 
     public Long getSequencia() {
