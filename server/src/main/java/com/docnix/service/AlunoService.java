@@ -9,6 +9,7 @@ import java.util.*;
 public class AlunoService {
 
     private static final AlunoRepository alunoRepository = new AlunoRepository();
+    private static final TurmaRepository turmaRepository = new TurmaRepository();
 
     public Aluno inserir(Aluno aluno) {
         aluno.setDataDaMatricula(new Date());
@@ -20,7 +21,9 @@ public class AlunoService {
     }
 
     public Aluno obter(Long id) {
-        return alunoRepository.obter(id);
+        Aluno aluno = alunoRepository.obter(id);
+        aluno.setNomeTurma(turmaRepository.obterNomeDaTurmaDoAluno(aluno.getId()));
+        return aluno;
     }
 
     public List listar() {

@@ -16,7 +16,7 @@ function AlunoEditarControler($scope, $http, $state, AlunoService, $stateParams)
         AlunoService.consultar($stateParams.id)
             .then(response => {
                 $scope.aluno = response;
-            });
+            })
     }
 
     function editar() {

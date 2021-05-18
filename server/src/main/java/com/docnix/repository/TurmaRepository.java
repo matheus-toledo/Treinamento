@@ -10,6 +10,7 @@ import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -78,31 +79,6 @@ public class TurmaRepository extends BaseRepository<Turma> {
                 .uniqueResult();
 
         return Optional.ofNullable(result);
-    }
-
-
-    /*  public Turma salvar(Turma turma) {
-          this.session = HibernateConfig.getSessionFactory().openSession();
-          session.getTransaction().begin();
-          turma = (Turma) session.merge(turma);
-          session.getTransaction().commit();
-          session.close();
-          return turma;
-
-      }
-  */
-    public Optional<Long> getSequenciaAluno(Long id) {
-        Long result = (Long) HibernateConfig.getSessionFactory().openSession()
-                .createCriteria(Turma.class, "turma")
-                .createAlias("turma.alunos", "alunos")
-                .add(Restrictions.eq("turma.id", id))
-                .setProjection(Projections.projectionList()
-                        .add(Projections.max("alunos.sequencia")))
-                .setMaxResults(1)
-                .uniqueResult();
-
-        return Optional.ofNullable(result);
-
     }
 
     public Long consultarSequencia(Long id) {
@@ -217,6 +193,16 @@ public class TurmaRepository extends BaseRepository<Turma> {
                 .createAlias("bean.alunos", "alunos")
                 .add(Restrictions.eq("alunos.id", id))
                 .setProjection(Projections.property("bean.sigla"))
+                .setMaxResults(1)
+                .uniqueResult();
+    }
+
+    public String obterNomeDaTurmaDoAluno(Long id){
+        return (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .createAlias("bean.alunos", "alunos")
+                .add(Restrictions.eq("alunos.id", id))
+                .setProjection(Projections.property("bean.nome"))
                 .setMaxResults(1)
                 .uniqueResult();
     }

@@ -14,7 +14,6 @@
                 <th scope="col">Idade</th>
                 <th scope="col">Matrícula</th>
                 <th scope="col">Data da matrícula</th>
-                <th scope="col">Turma</th>
                 <th scope="col">Opções</th>
             </tr>
             </thead>
@@ -26,7 +25,6 @@
                 <td>{{aluno.idade}}</td>
                 <td>{{aluno.matricula}}</td>
                 <td>{{aluno.dataDaMatricula | date:'dd/MM/yyyy'}}</td>
-                <td>{{aluno.turma}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" ng-click="editar(aluno.id)"><i class="fas fa-edit"></i></button>
                     <button type="button" class="btn btn-danger" ng-click="deletar(aluno.nome,aluno.id);"><i class="far fa-trash-alt"></i></button>

@@ -1,12 +1,13 @@
 package com.docnix.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Table(name = "TRE_ALUNO")
 public class Aluno {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_aluno")
@@ -28,8 +29,11 @@ public class Aluno {
     @Column(name = "sequencia_turma")
     private Long sequencia;
 
-    @Column(name = "matricula")
+    @Transient
     private String matricula;
+
+    @Transient
+    private String nomeTurma;
 
     public Aluno() {
     }
@@ -74,8 +78,13 @@ public class Aluno {
         return this.matricula;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setMatricula(String sigla) {
+        if(Optional.ofNullable(sigla).isPresent()){
+            this.matricula = String.format("%s - %s",sigla,this.sequencia);
+        }
+        else{
+            this.matricula=null;
+        }
     }
 
     public Date getDataDaMatricula() {
@@ -94,4 +103,11 @@ public class Aluno {
         this.sequencia = sequencia;
     }
 
+    public String getNomeTurma() {
+        return nomeTurma;
+    }
+
+    public void setNomeTurma(String nomeTurma) {
+        this.nomeTurma = nomeTurma;
+    }
 }

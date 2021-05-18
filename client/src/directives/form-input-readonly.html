@@ -2,11 +2,10 @@
     <div class="col-md-6 mb-3">
         <label for="{{id}}">{{label}}</label>
         <input type="{{type}}"
-               maxlength="{{max}}"
                class="form-control"
                id={{id}}
-               ng-readonly={{leitura}}
                ng-model="ngModel"
-               ng-pattern="ngPattern" required>
+               ng-readonly="true"
+               required>
     </div>
 </div>
