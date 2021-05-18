@@ -26,16 +26,18 @@ public class TurmaController {
 
     @GET
     @Path("/sequencia/{sigla}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getSequencia(@PathParam("sigla") String sigla){
-        return Response.accepted(turmaService.gerarSequencia(sigla)).build();
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getMatricula(@QueryParam("id")Long id, @PathParam("sigla") String sigla){
+        return Response.ok().entity(turmaService.gerarMatricula(sigla, id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response inserirTurma(Turma turma) {
-        return Response.status(Response.Status.CREATED).entity(turmaService.inserir(turma)).build();
+        Turma result = turmaService.inserir(turma);
+
+        return Response.status(Response.Status.CREATED).entity(new Turma(result.getId())).build();
     }
 
     @PUT

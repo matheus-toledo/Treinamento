@@ -1,24 +1,46 @@
 angular.module("TreinamentoApp")
     .controller('TurmaIncluirController', TurmaIncluirController)
 
-TurmaIncluirController.$inject = ['$scope', 'TurmaService', 'AlunoService', '$state'];
+TurmaIncluirController.$inject = ['$scope', 'TurmaService', '$state', 'AlunoService','$stateParams'];
 
-function TurmaIncluirController($scope, TurmaService, AlunoService, $state) {
-    $scope.turma = {};
-    $scope.turma.curso={};
+function TurmaIncluirController($scope, TurmaService, $state, AlunoService,$stateParams) {
+
     $scope.incluir = incluir;
+
     _inicializar();
 
-    function _inicializar(){
+    ////////////////////////////////////////////////////////
+
+    function _inicializar() {
+        $scope.turma = {
+            curso: {},
+            alunos: []
+        };
 
     }
-
 
     function incluir() {
+ /*       $scope.turma.alunos = $scope.turma.alunos.map(id => {
+            return {id:id}
+        })*/
 
-        //TurmaService.incluir($scope.turma);
-        //$state.go('turmaEditar', {id: $scope.turma.id});
-        window.alert(JSON.stringify($scope.turma));
+        $scope.turma.alunosIds = angular.copy($scope.turma.alunos);
+        $scope.turma.alunos = [];
+
+        TurmaService.incluir($scope.turma)
+            .then(responseData=>{
+
+                $state.go('turmaEditar', {id: responseData.id});
+            })
     }
+
+    function getAlunos(arr) {
+        return arr.filter(elem => {
+            if ($scope.turma.alunos.includes(elem.id)) {
+                return elem
+            }
+        })
+    }
+
 
 }

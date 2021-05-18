@@ -9,7 +9,7 @@ function TurmaService(configParams, $http) {
     this.editar = editar;
     this.deletar = deletar;
     this.incluir = incluir;
-    this.getSequencia = getSequencia;
+    this.gerarMatricula = gerarMatricula;
 
     function listar() {
         return $http.get(configParams.turmaUrl)
@@ -32,39 +32,40 @@ function TurmaService(configParams, $http) {
     function editar(turma) {
         return $http.put(`${configParams.turmaUrl}/${turma.id}`, turma)
             .then(() => {
-                console.log('Turma editada com sucesso');
+                window.alert('Turma editada com sucesso');
             })
             .catch(err => {
-                console.log(err.data.errorMessage);
+                window.alert(err.data);
             })
     }
 
-    function deletar() {
-        return $http.get(configParams.turmaUrl)
+    function deletar(id) {
+        return $http.delete(`${configParams.turmaUrl}/${id}`)
             .then(() => {
-                console.log('Turma deletada com sucesso');
+                window.alert('Turma deletada com sucesso');
             })
             .catch(err => {
-                console.log(err.data.errorMessage);
+                window.alert(err);
             });
     }
 
-    function incluir (){
-        return $http.post(configParams.turmaUrl)
-            .then(() => {
-                console.log('Turma incluída com sucesso');
+    function incluir(turma) {
+        return $http.post(configParams.turmaUrl, turma)
+            .then(response => {
+                window.alert('Turma incluída com sucesso');
+                return response.data;
             })
             .catch(err => {
-                console.log(err.data);
+                window.alert(err.data.message);
             });
     }
 
-    function getSequencia(sigla) {
-        return $http.get(`${configParams.turmaUrl}/sequencia/${sigla}`)
+    function gerarMatricula(sigla,id) {
+        return $http.get(`${configParams.turmaUrl}/sequencia/${sigla}?id=${id}`)
             .then(response => {
                 return response.data;
             }).catch(err => {
-                console.log(err.data.errorMessage);
+                window.alert(err);
             });
     }
 

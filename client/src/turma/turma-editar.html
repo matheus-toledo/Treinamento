@@ -1,28 +1,28 @@
 <main role="main">
     <div class="pb-2 mb-3 border-bottom">
-        <h1 class="h2">Cadastro de Turmas</h1>
+        <h1 class="h2">Editar Turma</h1>
     </div>
     <div class="col-12">
         <div class="row mb-5 justify-content-center">
             <div class="col-md-8 order-md-1 mb-5 offset-3">
-                {{turma | json}}
-                <form role="form" class="was-validated" name="turmaIncluirForm" ng-submit="turmaIncluirForm.$valid && incluir()" novalidate>
-                   <!-- <pre>{{turmaIncluirForm | json}}</pre>-->
+               <pre>{{turma | json}}</pre>
+                <form role="form" class="was-validated" name="turmaEditarForm" ng-submit="turmaEditarForm.$valid && editar()" novalidate>
+                    <!-- <pre>{{turmaIncluirForm | json}}</pre>-->
                     <form-input type="text" id="Nome" label="Nome" ng-model="turma.nome"></form-input>
 
                     <form-input type="text" max="5" id="sigla" label="Sigla" ng-model="turma.sigla"></form-input>
 
                     <form-select-curso id="Curso" label="Curso" ng-model="turma.curso.id" sigla="turma.curso.sigla"></form-select-curso>
 
-                    <form-input-turma-matricula type="text" id="Matricula" label="Matricula" ng-model="turma.matricula" sigla="turma.curso.sigla"></form-input-turma-matricula>
-                    <form-select-alunos id="alunos" ng-multiple="multiple" label="Alunos" ng-model="turma.alunos"></form-select-alunos>
+                    <form-input-turma-matricula type="text" id="Matricula" label="Matricula" ng-model="turma.matricula" sigla="turma.curso.sigla" turma-id="turma.id"></form-input-turma-matricula>
+                    <form-select-alunos id="alunos" ng-multiple="multiple" label="Alunos" ng-model="turma.alunosIds"></form-select-alunos>
 
                     <div class="row">
                         <div class="col-3">
                             <button class="btn btn-lg btn-primary offset-1" ui-sref="cursoListar">Voltar</button>
                         </div>
                         <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">Cadastrar Turma</button>
+                            <button class="btn btn-lg btn-success" type="submit">Editar Turma</button>
                         </div>
                     </div>
                 </form>
@@ -30,4 +30,3 @@
         </div>
     </div>
 </main>
-

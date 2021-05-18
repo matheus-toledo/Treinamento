@@ -40,8 +40,8 @@ public abstract class BaseRepository<T> {
         this.session = HibernateConfig.getSessionFactory().openSession();
         this.session.beginTransaction();
         T result = (T) session.merge(objectSave);
-        session.getTransaction().commit();
-        session.close();
+        this.session.getTransaction().commit();
+        this.session.close();
         return result;
 
     }
@@ -50,9 +50,19 @@ public abstract class BaseRepository<T> {
         Object object = obter(id);
         this.session = HibernateConfig.getSessionFactory().openSession();
         this.session.beginTransaction();
-        Optional.ofNullable(object).ifPresent(presentObject->session.delete(presentObject));
+        Optional.ofNullable(object).ifPresent(presentObject -> session.delete(presentObject));
         session.getTransaction().commit();
         session.close();
+    }
+
+    public void openSession() {
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        this.session.beginTransaction();
+    }
+
+    public void commitAndClose(){
+        this.session.getTransaction().commit();
+        this.session.close();
     }
 
 }

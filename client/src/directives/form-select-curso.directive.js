@@ -34,7 +34,7 @@ function formSelectCurso() {
         }
 
         function _watchNgModel(newValue) {
-            if (newValue && $scope.options) {
+            if (newValue && $scope.options.length>0) {
                 $scope.sigla = $scope.options.find(option => option.id === $scope.ngModel).sigla;
             }
         }

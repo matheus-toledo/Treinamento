@@ -2,6 +2,7 @@ package com.docnix.service;
 
 import com.docnix.entity.Aluno;
 import com.docnix.repository.AlunoRepository;
+import com.docnix.repository.TurmaRepository;
 
 import java.util.*;
 
@@ -9,14 +10,13 @@ public class AlunoService {
 
     private static final AlunoRepository alunoRepository = new AlunoRepository();
 
-
     public Aluno inserir(Aluno aluno) {
         aluno.setDataDaMatricula(new Date());
         return alunoRepository.salvar(aluno);
     }
 
-    private Long getSequencia(String sigla) {
-        return alunoRepository.getSequencia(sigla).orElse(0L);
+    public void updateSequencia(List<Long> ids,Long sequencial) {
+        alunoRepository.updateSequencia(ids,sequencial+1);
     }
 
     public Aluno obter(Long id) {
@@ -35,4 +35,7 @@ public class AlunoService {
         alunoRepository.deletar(id);
     }
 
+    public void removerSequencias(List idsParaRemoverSequencias) {
+        alunoRepository.removerSequencias(idsParaRemoverSequencias);
+    }
 }

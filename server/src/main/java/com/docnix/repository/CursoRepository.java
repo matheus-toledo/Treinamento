@@ -24,8 +24,8 @@ public class CursoRepository extends BaseRepository<Curso> {
     }
 
     public List<Curso> listar() {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Curso.class, "bean");
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        Criteria criteria = this.session.createCriteria(Curso.class, "bean");
         criteria.createAlias("bean.coordenador", "coordenadorCurso");
         criteria.createAlias("bean.escola", "escolaCurso");
 
@@ -47,7 +47,7 @@ public class CursoRepository extends BaseRepository<Curso> {
         List<Curso> cursos = new ArrayList<>();
 
         result.forEach(item -> cursos.add(cursoBuilder(item)));
-
+        this.session.close();
         return cursos;
     }
 

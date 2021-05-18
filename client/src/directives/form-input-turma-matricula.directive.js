@@ -12,7 +12,8 @@ function formInputMatricula() {
             ngModel: "=",
             max: "@",
             ngPattern: "@?",
-            sigla: "="
+            sigla: "=",
+            turmaId: "=?"
         },
         controller: formInputMatriculaController,
         link: function (scope) {
@@ -35,14 +36,16 @@ function formInputMatricula() {
         /////////////////////////////////
 
         function _inicializar() {
-
+            if(!$scope.turmaId){
+                $scope.turmaId="";
+            }
         }
 
         function _watchNgModel(newValue){
             if (newValue) {
-                TurmaService.getSequencia(newValue)
-                    .then(sequenciaData => {
-                        $scope.ngModel = newValue + ' - ' + sequenciaData
+                TurmaService.gerarMatricula(newValue,$scope.turmaId)
+                    .then(matricula => {
+                        $scope.ngModel = matricula;
                     })
             }
         }

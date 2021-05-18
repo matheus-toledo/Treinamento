@@ -1,13 +1,10 @@
 package com.docnix.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 @Entity
 @Table(name = "TRE_TURMA")
@@ -33,12 +30,18 @@ public class Turma {
     @JoinColumn(name = "id_turma_curso",nullable = false)
     private Curso curso;
 
-    @OneToMany(mappedBy = "turma",fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    @JsonManagedReference
-    private Set<Aluno> alunos = new HashSet<>();
+    @ManyToMany(targetEntity = Aluno.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "TRE_TURMA_ALUNO", joinColumns = @JoinColumn(name = "id_turma"), inverseJoinColumns = @JoinColumn(name = "id_aluno"),uniqueConstraints = @UniqueConstraint(columnNames = {"id_aluno"}))
+    private Set<Aluno> alunos;
+
+    @Transient
+    private List<Long> alunosIds;
 
     public Turma() {
+    }
+
+    public Turma(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -95,5 +98,13 @@ public class Turma {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
+    }
+
+    public List<Long> getAlunosIds() {
+        return alunosIds;
+    }
+
+    public void setAlunosIds(List<Long> alunosIds) {
+        this.alunosIds = alunosIds;
     }
 }

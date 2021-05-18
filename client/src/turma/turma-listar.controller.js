@@ -1,9 +1,9 @@
 angular.module("TreinamentoApp")
     .controller("TurmaListarController", TurmaListarController)
 
-TurmaListarController.$inject = ['$scope', 'TurmaService'];
+TurmaListarController.$inject = ['$scope', 'TurmaService','$state'];
 
-function TurmaListarController($scope, TurmaService) {
+function TurmaListarController($scope, TurmaService, $state) {
     $scope.turmas = [];
     $scope.deletar = deletar;
     $scope.editar = editar;
@@ -21,18 +21,18 @@ function TurmaListarController($scope, TurmaService) {
     function deletar(nome, id) {
         if (confirm(`Deseja deletar a turma ${nome}`)) {
             TurmaService.deletar(id).then(() => {
-                _atualizar();
-            }).catch();
+                _atualizar(id);
+            });
         }
     }
 
     function _listar() {
         TurmaService.listar().then(response => {
-            $scope.turma = response;
+            $scope.turmas = response;
         })
     }
 
     function _atualizar(id) {
-        $scope.turmas.filter(turma => turma.id !== id)
+       $scope.turmas = $scope.turmas.filter(turma => turma.id !== id)
     }
 }

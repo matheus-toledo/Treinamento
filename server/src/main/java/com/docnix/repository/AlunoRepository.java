@@ -2,21 +2,28 @@ package com.docnix.repository;
 
 import com.docnix.config.HibernateConfig;
 import com.docnix.entity.Aluno;
+import com.docnix.entity.Turma;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.hibernate.transform.Transformers;
 
+import javax.persistence.JoinColumn;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AlunoRepository extends BaseRepository<Aluno> {
-
+    private TurmaRepository turmaRepository = new TurmaRepository();
     public AlunoRepository() {
         super(Aluno.class);
     }
 
+    @SuppressWarnings("unchecked")
     public List listar() {
 
-        return HibernateConfig.getSessionFactory().openSession()
+        List<Aluno> alunoList = (List<Aluno>) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(getTClass(), "bean")
                 .setProjection(Projections.distinct(Projections.projectionList()
                         .add(Projections.property("bean.id").as("id"))
@@ -25,25 +32,40 @@ public class AlunoRepository extends BaseRepository<Aluno> {
                         .add(Projections.property("bean.idade").as("idade"))
                         .add(Projections.property("bean.dataDaMatricula").as("dataDaMatricula"))
                         .add(Projections.property("bean.sequencia").as("sequencia"))
-                        .add(Projections.property("bean.matricula").as("matricula"))
                 ))
                 .setResultTransformer(Transformers.aliasToBean(this.getTClass()))
                 .list();
-    }
 
-    public Optional<Long> getSequencia(String sigla) {
-        Long result = (Long) HibernateConfig.getSessionFactory().openSession()
-                .createCriteria(this.getTClass(), "bean")
-                .createAlias("bean.turma", "alunoTurma")
-                .add(Restrictions.eq("alunoTurma.sigla", sigla))
-                .setProjection(Projections.projectionList()
-                        .add(Projections.max("bean.sequencia")))
-                .setMaxResults(1)
-                .uniqueResult();
+        alunoList.forEach(aluno ->{
+            aluno.setMatricula(turmaRepository.obterSiglaParaAluno(aluno.getId()));
+        });
 
-        return Optional.ofNullable(result);
+        return alunoList;
     }
 
 
+    public void updateSequencia(List<Long> ids, Long sequencial) {
+        AtomicLong sequencia = new AtomicLong(sequencial);
+
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        session.beginTransaction();
+        ids.forEach(id -> {
+            Aluno alunoPersistent = session.find(this.getTClass(),id);
+            alunoPersistent.setSequencia(sequencia.getAndSet(sequencia.get() + 1));
+        });
+        session.getTransaction().commit();
+        this.session.close();
+    }
+
+    public void removerSequencias(List<Long> ids) {
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        session.beginTransaction();
+        ids.forEach(id -> {
+            Aluno alunoPersistent = session.find(this.getTClass(),id);
+            alunoPersistent.setSequencia(null);
+        });
+        session.getTransaction().commit();
+        this.session.close();
+    }
 
 }
