@@ -20,6 +20,7 @@
             <param-value>
                 com.docnix.config.JacksonObjectMapperResolver,
                 org.glassfish.jersey.jackson.JacksonFeature
+                com.docnix.exceptionMapper.RegraDeNegocioException
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
