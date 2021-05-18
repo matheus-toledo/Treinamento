@@ -68,4 +68,25 @@ public class AlunoRepository extends BaseRepository<Aluno> {
         this.session.close();
     }
 
+    public Optional<String> consultaNome(String nome) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .setProjection(Projections.property("bean.nome").as("nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> consultaEmail(String email) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.email",email))
+                .setProjection(Projections.property("bean.email").as("email"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
 }

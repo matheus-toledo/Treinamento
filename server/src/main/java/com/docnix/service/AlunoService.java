@@ -1,6 +1,8 @@
 package com.docnix.service;
 
 import com.docnix.entity.Aluno;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.AlunoRepository;
 import com.docnix.repository.TurmaRepository;
 
@@ -11,7 +13,15 @@ public class AlunoService {
     private static final AlunoRepository alunoRepository = new AlunoRepository();
     private static final TurmaRepository turmaRepository = new TurmaRepository();
 
-    public Aluno inserir(Aluno aluno) {
+    public Aluno inserir(Aluno aluno) throws RegraDeNegocioException, ServerException {
+        if(Optional.ofNullable(alunoRepository.consultaNome(aluno.getNome())).isPresent()){
+            throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse nome!");
+        }
+
+        if(Optional.ofNullable(alunoRepository.consultaEmail(aluno.getEmail())).isPresent()){
+            throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse email!");
+        }
+
         aluno.setDataDaMatricula(new Date());
         return alunoRepository.salvar(aluno);
     }

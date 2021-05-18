@@ -1,6 +1,8 @@
 package com.docnix.controllers;
 
 import com.docnix.entity.Aluno;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.AlunoService;
 
 import javax.ws.rs.*;
@@ -27,7 +29,7 @@ public class AlunoController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirAluno(Aluno aluno) {
+    public Response inserirAluno(Aluno aluno) throws RegraDeNegocioException, ServerException {
         return Response.status(Response.Status.CREATED).entity(alunoService.inserir(aluno)).build();
     }
 
