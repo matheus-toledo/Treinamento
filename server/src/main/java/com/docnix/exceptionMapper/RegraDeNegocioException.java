@@ -1,5 +1,7 @@
 package com.docnix.exceptionMapper;
 
+import com.docnix.errorHandler.ErrorObject;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -16,6 +18,6 @@ public class RegraDeNegocioException extends Exception implements ExceptionMappe
 
     @Override
     public Response toResponse(RegraDeNegocioException exception) {
-        return Response.status(Response.Status.BAD_REQUEST).entity(exception.getMessage()).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorObject(exception.getMessage())).build();
     }
 }

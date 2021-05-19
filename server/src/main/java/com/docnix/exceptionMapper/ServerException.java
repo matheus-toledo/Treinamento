@@ -1,5 +1,7 @@
 package com.docnix.exceptionMapper;
 
+import com.docnix.errorHandler.ErrorObject;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -12,6 +14,6 @@ public class ServerException extends Throwable implements ExceptionMapper<Throwa
 
     @Override
     public Response toResponse(Throwable exception) {
-        return Response.serverError().entity(exception.getMessage()).build();
+        return Response.serverError().entity(new ErrorObject("Erro interno do Servidor! Contate o suporte!")).build();
     }
 }
