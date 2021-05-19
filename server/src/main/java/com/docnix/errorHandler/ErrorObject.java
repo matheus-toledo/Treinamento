@@ -1,9 +1,13 @@
 package com.docnix.errorHandler;
 
-public class ErrorMessage {
+public class ErrorObject {
     private String errorMessage;
 
-    public ErrorMessage() {
+    public ErrorObject() {
+    }
+
+    public ErrorObject(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public String getErrorMessage() {
