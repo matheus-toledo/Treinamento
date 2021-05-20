@@ -15,7 +15,9 @@ function UsuarioEditarController($scope, $http, $state, $stateParams, UsuarioSer
         UsuarioService.consultar($stateParams.id)
             .then(response => {
                 $scope.usuario = response;
-            })
+            }).catch(()=>{
+                $state.go('usuarioListar');
+        })
     }
 
     function editar() {

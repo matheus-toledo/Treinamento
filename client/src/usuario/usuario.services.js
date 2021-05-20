@@ -15,8 +15,6 @@ function UsuarioService ($http, configParams){
     function _listar (){
         return $http.get(configParams.usuarioUrl).then(response => {
           return response.data;
-        }).catch(data => {
-            window.alert('Erro ao listar usuários: ' + data);
         });
     }
 
@@ -25,9 +23,6 @@ function UsuarioService ($http, configParams){
             .then(response => {
                 window.alert("Usuário cadastrado com sucesso");
                 return response.data;
-            })
-            .catch(function (reject) {
-                window.alert(`Erro no cadastro do usuário: ${reject.message}`);
             });
     }
 
@@ -35,9 +30,6 @@ function UsuarioService ($http, configParams){
         return $http.put(`${configParams.usuarioUrl}/${usuario.id}`, usuario)
             .then(() => {
                 window.alert("Usuário editado com sucesso");
-            })
-            .catch(reject => {
-                window.alert('Erro ao editar usuário' + reject.messageerror);
             });
     }
 
@@ -45,12 +37,7 @@ function UsuarioService ($http, configParams){
         return $http.delete(`${configParams.usuarioUrl}/${id}`)
             .then(() => {
                 window.alert("Usuário deletado com sucesso");
-
-            }).catch(reject => {
-                window.alert(reject.data.errorMessage);
-                throw new Error();
             });
-
     }
 
     function _consultar(id) {
