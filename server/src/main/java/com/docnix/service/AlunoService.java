@@ -14,11 +14,11 @@ public class AlunoService {
     private static final TurmaRepository turmaRepository = new TurmaRepository();
 
     public Aluno inserir(Aluno aluno) throws RegraDeNegocioException, ServerException {
-        if(Optional.ofNullable(alunoRepository.consultaNome(aluno.getNome())).isPresent()){
+        if (alunoRepository.consultaNome(aluno.getNome()).isPresent()) {
             throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse nome!");
         }
 
-        if(Optional.ofNullable(alunoRepository.consultaEmail(aluno.getEmail())).isPresent()){
+        if (alunoRepository.consultaEmail(aluno.getEmail()).isPresent()) {
             throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse email!");
         }
 
@@ -26,21 +26,29 @@ public class AlunoService {
         return alunoRepository.salvar(aluno);
     }
 
-    public void updateSequencia(List<Long> ids,Long sequencial) {
-        alunoRepository.updateSequencia(ids,sequencial+1);
+    public void updateSequencia(List<Long> ids, Long sequencial) {
+        alunoRepository.updateSequencia(ids, sequencial + 1);
     }
 
-    public Aluno obter(Long id) {
+    public Aluno obter(Long id) throws ServerException {
         Aluno aluno = alunoRepository.obter(id);
         aluno.setNomeTurma(turmaRepository.obterNomeDaTurmaDoAluno(aluno.getId()));
         return aluno;
     }
 
-    public List listar() {
+    public List listar() throws ServerException {
         return alunoRepository.listar();
     }
 
-    public Aluno editar(Aluno aluno) {
+    public Aluno editar(Aluno aluno) throws RegraDeNegocioException, ServerException {
+        if (alunoRepository.consultaNome(aluno.getNome(), aluno.getId()).isPresent()) {
+            throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse nome!");
+        }
+
+        if (alunoRepository.consultaEmail(aluno.getEmail(), aluno.getId()).isPresent()) {
+            throw new RegraDeNegocioException("Já existe um aluno cadastrado com esse email!");
+        }
+
         return alunoRepository.editar(aluno);
     }
 
