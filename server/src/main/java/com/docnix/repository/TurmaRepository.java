@@ -1,19 +1,15 @@
 package com.docnix.repository;
 
 import com.docnix.config.HibernateConfig;
-import com.docnix.entity.Aluno;
 import com.docnix.entity.Curso;
 import com.docnix.entity.Turma;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TurmaRepository extends BaseRepository<Turma> {
     public TurmaRepository() {
@@ -148,42 +144,24 @@ public class TurmaRepository extends BaseRepository<Turma> {
 
     @SuppressWarnings("unchecked")
     public Turma obter(Long id) {
-        List<Map<String, Object>> result = (List<Map<String, Object>>) HibernateConfig.getSessionFactory().openSession()
-                .createCriteria(this.getTClass(), "bean")
-                .createAlias("bean.curso", "curso")
-                .createAlias("bean.alunos", "alunos")
-                .add(Restrictions.eq("bean.id", id))
-                .setProjection(Projections.distinct(Projections.projectionList()
-                        .add(Projections.property("bean.id").as("id"))
-                        .add(Projections.property("bean.nome").as("nome"))
-                        .add(Projections.property("bean.sigla").as("sigla"))
-                        .add(Projections.property("bean.matricula").as("matricula"))
-                        .add(Projections.property("bean.sequencia").as("sequencia"))
-                        .add(Projections.property("curso.id").as("cursoId"))
-                        .add(Projections.property("curso.sigla").as("cursoSigla"))
-                        .add(Projections.property("alunos.id").as("alunoId"))))
-                .setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
-                .list();
-
-        Turma turma = new Turma();
-
-        Curso curso = new Curso();
-
-        curso.setId((Long) result.get(0).get("cursoId"));
-        curso.setSigla((String) result.get(0).get("cursoSigla"));
-
-        turma.setId((Long) result.get(0).get("id"));
-        turma.setNome((String) result.get(0).get("nome"));
-        turma.setSigla((String) result.get(0).get("sigla"));
-        turma.setSequencia((Long) result.get(0).get("sequencia"));
-        turma.setMatricula((String) result.get(0).get("matricula"));
-        turma.setAlunosIds(new ArrayList<>());
-        turma.setCurso(curso);
-
-        result.forEach(elem -> {
-            turma.getAlunosIds().add((Long) elem.get("alunoId"));
-        });
-        return turma;
+       this.session = HibernateConfig.getSessionFactory().openSession();
+       Turma turma = this.session.get(this.getTClass(),id);
+       Optional.ofNullable(turma).ifPresent(elem ->{
+           turma.setAlunosIds(new ArrayList<>());
+           turma.setCurso(turma.getCurso());
+           turma.setAlunos(turma.getAlunos());
+           turma.getAlunos().forEach(aluno -> {
+               turma.getAlunosIds().add(aluno.getId());
+           });
+           turma.getCurso().setEscola(null);
+           turma.getCurso().setCoordenador(null);
+           turma.getCurso().setMaterias(null);
+           turma.getCurso().setDescricao(null);
+           turma.getCurso().setNome(null);
+           turma.setAlunos(null);
+       });
+       this.session.close();
+       return turma;
 
     }
 
