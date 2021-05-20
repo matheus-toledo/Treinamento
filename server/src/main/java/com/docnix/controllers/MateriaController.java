@@ -3,13 +3,12 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Materia;
 
-import com.docnix.errorHandler.ErrorMessage;
+import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.MateriaService;
-import org.hibernate.HibernateException;
-
 import org.hibernate.exception.ConstraintViolationException;
 
-import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,21 +19,21 @@ public class MateriaController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMaterias() {
+    public Response getMaterias() throws ServerException {
         return Response.ok().entity(materiaService.listar()).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMateria(@PathParam("id") Long id) {
+    public Response getMateria(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(materiaService.obter(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirMateria(Materia materia) {
+    public Response inserirMateria(Materia materia) throws ServerException, RegraDeNegocioException {
         if (materia.getProfessor() == null) {
             return Response.status(400).build();
         }
@@ -50,25 +49,22 @@ public class MateriaController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response alteraMateria(Materia materia) {
-
+    public Response alteraMateria(Materia materia) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(materiaService.editar(materia)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deletaMateria(@PathParam("id") Long id) {
+    public Response deletaMateria(@PathParam("id") Long id) throws ServerException {
         try {
             materiaService.deletar(id);
             return Response.ok().build();
         } catch (Exception ex) {
-            ErrorMessage errorMessage = new ErrorMessage();
-
-            if (ex.getCause() instanceof ConstraintViolationException){
-                errorMessage.setErrorMessage("A matéria não pode ser deletada pois existe um curso com essa matéria");
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                return Response.status(500).entity(new ErrorObject("A matéria não pode ser deletado pois está sendo usada em outro lugar")).build();
+            } else {
+                throw new ServerException();
             }
-
-            return Response.serverError().entity(errorMessage).build();
         }
 
     }

@@ -10,6 +10,7 @@ import org.hibernate.criterion.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class MateriaRepository extends BaseRepository<Materia> {
     public MateriaRepository() {
@@ -49,4 +50,26 @@ public class MateriaRepository extends BaseRepository<Materia> {
         return materia;
     }
 
+    public Optional<String> obterNome(String nome) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> obterNome(String nome, Long id) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
 }
