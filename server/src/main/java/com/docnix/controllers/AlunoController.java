@@ -25,7 +25,7 @@ public class AlunoController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAluno(@PathParam("id") Long id) throws ServerException {
+    public Response getAluno(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(alunoService.obter(id)).build();
     }
 

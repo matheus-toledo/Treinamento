@@ -30,8 +30,11 @@ public class AlunoService {
         alunoRepository.updateSequencia(ids, sequencial + 1);
     }
 
-    public Aluno obter(Long id) throws ServerException {
+    public Aluno obter(Long id) throws ServerException, RegraDeNegocioException {
         Aluno aluno = alunoRepository.obter(id);
+        if (aluno == null){
+            throw new RegraDeNegocioException("Não existe esse aluno no sistema!",404);
+        }
         aluno.setNomeTurma(turmaRepository.obterNomeDaTurmaDoAluno(aluno.getId()));
         return aluno;
     }
