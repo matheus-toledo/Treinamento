@@ -2,7 +2,11 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Curso;
 
+import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.CursoService;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,21 +18,21 @@ public class CursoController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCursos() {
+    public Response getCursos() throws ServerException {
         return Response.ok().entity(cursoService.listar()).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCurso(@PathParam("id") Long id) {
+    public Response getCurso(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(cursoService.obter(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirCurso(Curso curso) {
+    public Response inserirCurso(Curso curso) throws RegraDeNegocioException {
 
         if (curso.getDescricao().length()>2500){
             curso.setDescricao(curso.getDescricao().substring(0,2499));
@@ -44,16 +48,24 @@ public class CursoController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response alteraCurso(Curso curso) {
+    public Response alteraCurso(Curso curso) throws RegraDeNegocioException {
 
         return Response.ok().entity(cursoService.editar(curso)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deletaCurso(@PathParam("id") Long id) {
-        cursoService.deletar(id);
-        return Response.ok().build();
+    public Response deletaCurso(@PathParam("id") Long id) throws ServerException {
+        try{
+            cursoService.deletar(id);
+            return Response.ok().build();
+        }catch (Exception ex) {
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                return Response.serverError().entity(new ErrorObject("O curso não pode ser deletado pois está sendo usado em outro lugar!")).build();
+            } else {
+                throw new ServerException();
+            }
+        }
     }
 
 }

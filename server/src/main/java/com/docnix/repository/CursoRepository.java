@@ -12,10 +12,7 @@ import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.hibernate.transform.Transformers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CursoRepository extends BaseRepository<Curso> {
 
@@ -69,5 +66,51 @@ public class CursoRepository extends BaseRepository<Curso> {
 
         return curso;
     }
+
+    public Optional<String> obterNome(String nome) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> obterNome(String nome, Long id) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> obterSigla(String sigla) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.sigla",sigla))
+                .setProjection(Projections.property("bean.sigla"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+    public Optional<String> obterSigla(String sigla,Long id) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.sigla",sigla))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.sigla"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
 
 }
