@@ -2,6 +2,8 @@ package com.docnix.service;
 
 
 import com.docnix.entity.Usuario;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.UsuarioRepository;
 
 import java.util.List;
@@ -9,23 +11,32 @@ import java.util.List;
 public class UsuarioService {
     private static final UsuarioRepository usuarioRepository= new UsuarioRepository();
 
-    public Usuario inserir (Usuario usuario){
+    public Usuario inserir (Usuario usuario) throws RegraDeNegocioException, ServerException {
+        if (usuarioRepository.obterNome(usuario.getNome()).isPresent()){
+            throw new RegraDeNegocioException("Já existe um usuário cadastrado com esse nome!");
+        }
         return usuarioRepository.salvar(usuario);
     }
 
-    public Usuario obter(Long id){
-        return usuarioRepository.obter(id);
+    public Usuario obter(Long id) throws ServerException, RegraDeNegocioException {
+        Usuario usuario = usuarioRepository.obter(id);
+        if (usuario == null){
+            throw new RegraDeNegocioException("Não existe esse usuário no sistema!",404);
+        }
+        return usuario;
     }
 
-    //listar
-    public List<Usuario> listar(){
+    public List<Usuario> listar() throws ServerException {
         return usuarioRepository.listar();
     }
-    //editar
-    public Usuario editar(Usuario usuario){
+
+    public Usuario editar(Usuario usuario) throws RegraDeNegocioException, ServerException{
+        if(usuarioRepository.obterNome(usuario.getNome(), usuario.getId()).isPresent()){
+            throw new RegraDeNegocioException("Já existe um usuário com esse nome!");
+        }
         return usuarioRepository.editar(usuario);
     }
-    //deletar
+
     public void deletar(Long id){
         usuarioRepository.deletar(id);
     }

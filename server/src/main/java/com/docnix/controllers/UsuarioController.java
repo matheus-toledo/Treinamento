@@ -2,7 +2,9 @@ package com.docnix.controllers;
 
 
 import com.docnix.entity.Usuario;
-import com.docnix.errorHandler.ErrorMessage;
+import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.UsuarioService;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -16,22 +18,21 @@ public class UsuarioController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuarios() {
+    public Response getUsuarios() throws ServerException {
         return Response.ok().entity(usuarioService.listar()).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@PathParam("id") Long id) {
+    public Response getUsuario(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(usuarioService.obter(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirUsuario(Usuario usuario) {
-
+    public Response inserirUsuario(Usuario usuario) throws ServerException, RegraDeNegocioException {
         return Response.status(Response.Status.CREATED).entity(usuarioService.inserir(usuario)).build();
     }
 
@@ -39,29 +40,23 @@ public class UsuarioController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response alteraUsuario(Usuario usuario) {
-
-
+    public Response alteraUsuario(Usuario usuario) throws ServerException, RegraDeNegocioException {
         return Response.ok().entity(usuarioService.editar(usuario)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deletaUsuario(@PathParam("id") Long id) {
+    public Response deletaUsuario(@PathParam("id") Long id) throws ServerException {
         try{
-        usuarioService.deletar(id);
-        return Response.ok().build();
-        }catch (Exception ex){
-            ErrorMessage errorMessage = new ErrorMessage();
+            usuarioService.deletar(id);
+            return Response.ok().build();
+        } catch (Exception ex){
             if(ex.getCause() instanceof ConstraintViolationException){
-                errorMessage.setErrorMessage("O usuário não pode ser deletado pois existe um curso, matéria ou escola utilizando esse usuário");
-            } else {
-                errorMessage.setErrorMessage("Erro ao deletar usuário");
+                return Response.serverError().entity(new ErrorObject("Esse usuário não pode ser deletado pois está sendo usado em outro lugar!")).build();
             }
-            return Response.serverError().entity(errorMessage).build();
-
-
+            else {
+                throw new ServerException();
+            }
         }
     }
-
 }
