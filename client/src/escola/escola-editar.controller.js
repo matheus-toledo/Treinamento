@@ -23,7 +23,9 @@ function EscolaEditarController($scope, $http, $state, EscolaService, $statePara
         EscolaService.consultar($stateParams.id)
             .then(response => {
                 $scope.escola = response;
-            });
+            }).catch(()=>{
+                $state.go('escolaListar');
+        })
     }
 
     function editar() {

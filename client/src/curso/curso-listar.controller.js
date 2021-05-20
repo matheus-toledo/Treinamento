@@ -36,7 +36,6 @@ function CursoListarController($scope, $http, $state, CursoService, configParams
             .then(response => {
                 $scope.cursos = response;
             })
-
     }
 
 }

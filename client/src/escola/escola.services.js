@@ -15,8 +15,6 @@ function EscolaService($http, configParams) {
         return $http.get(configParams.escolaUrl)
             .then(response => {
                 return response.data;
-            }).catch(error => {
-                console.log("Erro ao obter lista de escolas:" +error);
             })
     }
 
@@ -32,9 +30,6 @@ function EscolaService($http, configParams) {
             .then(response => {
                 window.alert("Escola cadastrada com sucesso");
                 return response.data;
-            })
-            .catch(function (reject) {
-                window.alert(`Erro no cadastro da escola: ${reject.message}`);
             });
     }
 
@@ -42,9 +37,6 @@ function EscolaService($http, configParams) {
         return $http.put(`${configParams.escolaUrl}/${aluno.id}`, aluno)
             .then(() => {
                 window.alert("Escola editada com sucesso");
-            })
-            .catch(reject => {
-                window.alert('Erro ao editar escola' + reject.messageerror);
             });
     }
 
@@ -52,10 +44,6 @@ function EscolaService($http, configParams) {
         return $http.delete(`${configParams.escolaUrl}/${id}`)
             .then(() => {
                 window.alert("Escola deletada com sucesso");
-
-            }).catch(reject => {
-                window.alert(reject.data.errorMessage);
-                throw new Error();
             });
 
     }

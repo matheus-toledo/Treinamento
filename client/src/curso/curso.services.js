@@ -15,8 +15,6 @@ function CursoService ($http, configParams){
     function _listar (){
         return $http.get(configParams.cursoUrl).then(response => {
             return response.data;
-        }).catch(data => {
-            window.alert('Erro ao listar cursos: ' + data);
         });
     }
 
@@ -25,9 +23,6 @@ function CursoService ($http, configParams){
             .then(response => {
                 window.alert("Curso cadastrado com sucesso");
                 return response.data;
-            })
-            .catch(function (reject) {
-                window.alert(`Erro no cadastro do curso: ${reject.message}`);
             });
     }
 
@@ -35,9 +30,6 @@ function CursoService ($http, configParams){
         return $http.put(`${configParams.cursoUrl}/${curso.id}`, curso)
             .then(() => {
                 window.alert("Curso editado com sucesso");
-            })
-            .catch(reject => {
-                window.alert('Erro ao editar curso' + reject.messageerror);
             });
     }
 
@@ -46,8 +38,6 @@ function CursoService ($http, configParams){
             .then(() => {
                 window.alert("Curso deletado com sucesso");
 
-            }).catch(reject => {
-                window.alert("Erro ao tentar deletar curso: " + reject.message);
             });
 
     }

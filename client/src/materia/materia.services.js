@@ -15,8 +15,6 @@ function MateriaService ($http, configParams){
     function _listar (){
         return $http.get(configParams.materiaUrl).then(response => {
             return response.data;
-        }).catch(data => {
-            window.alert('Erro ao listar matérias: ' + data);
         });
     }
 
@@ -25,9 +23,6 @@ function MateriaService ($http, configParams){
             .then(response => {
                 window.alert("Matéria cadastrada com sucesso");
                 return response.data;
-            })
-            .catch(function (reject) {
-                window.alert(`Erro no cadastro da matéria: ${reject.message}`);
             });
     }
 
@@ -35,9 +30,6 @@ function MateriaService ($http, configParams){
         return $http.put(`${configParams.materiaUrl}/${materia.id}`, materia)
             .then(() => {
                 window.alert("Matéria editada com sucesso");
-            })
-            .catch(reject => {
-                window.alert('Erro ao editar matéria' + reject.messageerror);
             });
     }
 
@@ -46,9 +38,6 @@ function MateriaService ($http, configParams){
             .then(() => {
                 window.alert("Matéria deletada com sucesso");
 
-            }).catch(reject => {
-                window.alert(reject.data.errorMessage);
-                throw "erro"
             });
 
     }

@@ -31,7 +31,9 @@ function CursoEditarController($scope, $http, $state, $stateParams, CursoService
             .then(response => {
                 $scope.curso = response;
                 $scope.cursoMateriasId = response.materias.map(elem => elem.id);
-            })
+            }).catch(()=>{
+                $state.go('cursoListar');
+        })
     }
 
     function _editar() {

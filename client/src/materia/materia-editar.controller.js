@@ -20,7 +20,9 @@ function MateriaEditarController($scope, $http, $state, $stateParams, MateriaSer
         MateriaService.consultar($stateParams.id)
             .then(response => {
                 $scope.materia = response;
-            })
+            }).catch(()=>{
+                $state.go('materiaListar');
+        })
 
     }
 

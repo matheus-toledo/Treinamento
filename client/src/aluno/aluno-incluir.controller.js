@@ -14,7 +14,9 @@ function AlunoIncluirController($scope, $http, $state, AlunoService) {
     function _incluir() {
         AlunoService.cadastrar($scope.aluno).then(response => {
             $scope.aluno = response;
-            $state.go('alunoEditar', {id: $scope.aluno.id});
-        })
+            return response.id;
+        }).then(id=>{
+            $state.go('alunoEditar', {id: id});
+        }).catch(()=>{});
     }
 }
