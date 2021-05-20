@@ -60,9 +60,8 @@ public abstract class BaseRepository<T> {
         this.session.beginTransaction();
     }
 
-    public void commitAndClose(){
+    public void commitAndClose() {
         this.session.getTransaction().commit();
         this.session.close();
     }
-
 }

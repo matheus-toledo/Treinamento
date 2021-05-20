@@ -2,6 +2,7 @@ package com.docnix.service;
 
 
 import com.docnix.entity.Usuario;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.UsuarioRepository;
@@ -18,10 +19,10 @@ public class UsuarioService {
         return usuarioRepository.salvar(usuario);
     }
 
-    public Usuario obter(Long id) throws ServerException, RegraDeNegocioException {
+    public Usuario obter(Long id) throws ServerException, NotFoundException {
         Usuario usuario = usuarioRepository.obter(id);
         if (usuario == null){
-            throw new RegraDeNegocioException("Não existe esse usuário no sistema!",404);
+            throw new NotFoundException("Não existe esse usuário no sistema!");
         }
         return usuario;
     }

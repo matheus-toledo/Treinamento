@@ -3,6 +3,7 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Escola;
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.EscolaService;
@@ -26,7 +27,7 @@ public class EscolaController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEscola(@PathParam("id") Long id) throws RegraDeNegocioException {
+    public Response getEscola(@PathParam("id") Long id) throws NotFoundException, ServerException {
         return Response.ok().entity(escolaService.obter(id)).build();
     }
 

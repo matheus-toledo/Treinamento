@@ -3,6 +3,7 @@ package com.docnix.service;
 
 import com.docnix.entity.Materia;
 import com.docnix.entity.Usuario;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.MateriaRepository;
@@ -19,11 +20,11 @@ public class MateriaService {
             return materiaRepository.salvar(materia);
     }
 
-    public Materia obter(Long id) throws RegraDeNegocioException, ServerException {
+    public Materia obter(Long id) throws ServerException, NotFoundException {
         Materia materia = materiaRepository.obter(id);
 
         if(materia==null){
-            throw new RegraDeNegocioException("Não existe essa matéria no sistema!",404);
+            throw new NotFoundException("Não existe essa matéria no sistema!");
         }
         return materia;
     }

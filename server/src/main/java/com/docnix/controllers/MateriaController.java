@@ -4,6 +4,7 @@ package com.docnix.controllers;
 import com.docnix.entity.Materia;
 
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.MateriaService;
@@ -26,7 +27,7 @@ public class MateriaController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMateria(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
+    public Response getMateria(@PathParam("id") Long id) throws ServerException, NotFoundException {
         return Response.ok().entity(materiaService.obter(id)).build();
     }
 

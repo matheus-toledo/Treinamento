@@ -2,6 +2,7 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Turma;
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.TurmaService;
@@ -24,7 +25,7 @@ public class TurmaController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTurma(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
+    public Response getTurma(@PathParam("id") Long id) throws ServerException, NotFoundException {
         return Response.ok().entity(turmaService.obter(id)).build();
     }
 

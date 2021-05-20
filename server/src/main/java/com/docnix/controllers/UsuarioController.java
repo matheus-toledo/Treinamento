@@ -3,6 +3,7 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Usuario;
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.UsuarioService;
@@ -25,7 +26,7 @@ public class UsuarioController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
+    public Response getUsuario(@PathParam("id") Long id) throws ServerException, NotFoundException {
         return Response.ok().entity(usuarioService.obter(id)).build();
     }
 

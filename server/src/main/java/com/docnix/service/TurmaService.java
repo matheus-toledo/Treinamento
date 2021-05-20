@@ -3,6 +3,7 @@ package com.docnix.service;
 import com.docnix.entity.Aluno;
 import com.docnix.entity.Turma;
 
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.TurmaRepository;
@@ -54,10 +55,10 @@ public class TurmaService {
         return String.format("%s - %d", sigla, result + 1);
     }
 
-    public Turma obter(Long id) throws RegraDeNegocioException, ServerException {
+    public Turma obter(Long id) throws ServerException, NotFoundException {
         Turma turma = turmaRepository.obter(id);
         if (turma == null){
-            throw new RegraDeNegocioException("Não existe essa turma no sistema!",404);
+            throw new NotFoundException("Não existe essa turma no sistema!");
         }
         //listar alunos da turma
         return turma;

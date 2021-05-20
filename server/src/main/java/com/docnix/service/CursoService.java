@@ -2,6 +2,7 @@ package com.docnix.service;
 
 
 import com.docnix.entity.Curso;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.CursoRepository;
@@ -22,11 +23,11 @@ public class CursoService {
         return cursoRepository.salvar(curso);
     }
 
-    public Curso obter(Long id) throws ServerException, RegraDeNegocioException {
+    public Curso obter(Long id) throws ServerException, NotFoundException {
         Curso curso = cursoRepository.obter(id);
 
         if (curso == null) {
-            throw new RegraDeNegocioException("Não existe esse curso no sitema!", 404);
+            throw new NotFoundException("Não existe esse curso no sitema!");
         }
 
         return curso;

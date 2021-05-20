@@ -2,6 +2,7 @@ package com.docnix.service;
 
 
 import com.docnix.entity.Escola;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.EscolaRepository;
@@ -20,10 +21,10 @@ public class EscolaService {
         return escolaRepository.salvar(escola);
     }
 
-    public Escola obter(Long id) throws RegraDeNegocioException {
+    public Escola obter(Long id) throws NotFoundException, ServerException {
         Escola escola = escolaRepository.obter(id);
         if(escola==null){
-            throw new RegraDeNegocioException("Não existe essa escola no sistema!",404);
+            throw new NotFoundException("Não existe essa escola no sistema!");
         }
         return escolaRepository.obter(id);
     }

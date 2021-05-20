@@ -2,6 +2,7 @@ package com.docnix.controllers;
 
 import com.docnix.entity.Aluno;
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.AlunoService;
@@ -25,7 +26,7 @@ public class AlunoController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAluno(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
+    public Response getAluno(@PathParam("id") Long id) throws NotFoundException, ServerException {
         return Response.ok().entity(alunoService.obter(id)).build();
     }
 

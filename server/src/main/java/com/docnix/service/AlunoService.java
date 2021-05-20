@@ -1,6 +1,7 @@
 package com.docnix.service;
 
 import com.docnix.entity.Aluno;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.AlunoRepository;
@@ -30,10 +31,10 @@ public class AlunoService {
         alunoRepository.updateSequencia(ids, sequencial + 1);
     }
 
-    public Aluno obter(Long id) throws ServerException, RegraDeNegocioException {
+    public Aluno obter(Long id) throws  NotFoundException, ServerException {
         Aluno aluno = alunoRepository.obter(id);
         if (aluno == null){
-            throw new RegraDeNegocioException("Não existe esse aluno no sistema!",404);
+            throw new NotFoundException("Não existe esse aluno no sistema!");
         }
         aluno.setNomeTurma(turmaRepository.obterNomeDaTurmaDoAluno(aluno.getId()));
         return aluno;

@@ -3,6 +3,7 @@ package com.docnix.controllers;
 import com.docnix.entity.Curso;
 
 import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.CursoService;
@@ -25,7 +26,7 @@ public class CursoController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCurso(@PathParam("id") Long id) throws ServerException, RegraDeNegocioException {
+    public Response getCurso(@PathParam("id") Long id) throws ServerException, NotFoundException {
         return Response.ok().entity(cursoService.obter(id)).build();
     }
 
