@@ -5,6 +5,7 @@ import com.docnix.errorHandler.ErrorObject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
+import java.util.Optional;
 
 @Provider
 public class RegraDeNegocioException extends Exception implements ExceptionMapper<RegraDeNegocioException> {
@@ -24,8 +25,13 @@ public class RegraDeNegocioException extends Exception implements ExceptionMappe
 
     @Override
     public Response toResponse(RegraDeNegocioException exception) {
-        if (exception.status==404){
-            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorObject(exception.getMessage())).build();
+
+
+
+        if (Optional.ofNullable(exception.status).isPresent()){
+            if (exception.status == 404){
+                return Response.status(Response.Status.NOT_FOUND).entity(new ErrorObject(exception.getMessage())).build();
+            }
         }
         return Response.status(Response.Status.BAD_REQUEST).entity(new ErrorObject(exception.getMessage())).build();
     }
