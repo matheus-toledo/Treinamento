@@ -8,10 +8,12 @@ import org.hibernate.Session;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class EscolaRepository extends BaseRepository<Escola> {
     public EscolaRepository() {
@@ -54,4 +56,24 @@ public class EscolaRepository extends BaseRepository<Escola> {
         return escola;
     }
 
+    public Optional<String> obterNome(String nome) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> obterNome(String nome, long id) {
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(),"bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+        return Optional.ofNullable(result);
+    }
 }

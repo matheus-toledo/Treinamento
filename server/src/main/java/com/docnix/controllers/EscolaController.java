@@ -2,7 +2,9 @@ package com.docnix.controllers;
 
 
 import com.docnix.entity.Escola;
-import com.docnix.errorHandler.ErrorMessage;
+import com.docnix.errorHandler.ErrorObject;
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.service.EscolaService;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -17,21 +19,21 @@ public class EscolaController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEscolas() {
+    public Response getEscolas() throws ServerException {
         return Response.ok().entity(escolaService.listar()).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEscola(@PathParam("id") Long id) {
+    public Response getEscola(@PathParam("id") Long id) throws RegraDeNegocioException {
         return Response.ok().entity(escolaService.obter(id)).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response inserirEscola(Escola escola) {
+    public Response inserirEscola(Escola escola) throws RegraDeNegocioException {
         if (escola.getDiretor() == null) {
             return Response.status(400).build();
         }
@@ -44,41 +46,31 @@ public class EscolaController {
             escola.setDescricao(escola.getDescricao().substring(0, 299));
         }
 
-        try {
-            return Response.status(Response.Status.CREATED).entity(escolaService.inserir(escola)).build();
-        } catch (Exception ex) {
-            return Response.serverError().build();
-        }
-
+        return Response.status(Response.Status.CREATED).entity(escolaService.inserir(escola)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response alterarEscola(Escola escola) {
+    public Response alterarEscola(Escola escola) throws RegraDeNegocioException {
         return Response.ok().entity(escolaService.editar(escola)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deletarEscola(@PathParam("id") Long id) {
+    public Response deletarEscola(@PathParam("id") Long id) throws ServerException {
 
         try {
             escolaService.deletar(id);
             return Response.ok().build();
 
         } catch (Exception ex) {
-            ErrorMessage errorMessage = new ErrorMessage();
-
             if (ex.getCause() instanceof ConstraintViolationException) {
-                errorMessage.setErrorMessage("A escola não pode ser deletada pois está sendo usada em algum curso");
+                return Response.serverError().entity(new ErrorObject("A escola não pode ser deletada pois está sendo usada em outro lugar!")).build();
             } else {
-                errorMessage.setErrorMessage("Erro ao tentar deletar escola");
+                throw new ServerException();
             }
-
-            return Response.serverError().entity(errorMessage).build();
         }
     }
-
 }
