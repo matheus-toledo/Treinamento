@@ -207,4 +207,48 @@ public class TurmaRepository extends BaseRepository<Turma> {
                 .uniqueResult();
     }
 
+    public Optional<String> obterNome(String nome){
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
+    public Optional<String> obterNome(String nome, Long id){
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.nome",nome))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.nome"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+    public Optional<String> obterSigla(String sigla){
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.sigla",sigla))
+                .setProjection(Projections.property("bean.sigla"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+    public Optional<String> obterSigla(String sigla, Long id){
+        String result = (String) HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.sigla",sigla))
+                .add(Restrictions.ne("bean.id",id))
+                .setProjection(Projections.property("bean.sigla"))
+                .setMaxResults(1)
+                .uniqueResult();
+
+        return Optional.ofNullable(result);
+    }
+
 }

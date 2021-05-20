@@ -3,6 +3,8 @@ package com.docnix.service;
 import com.docnix.entity.Aluno;
 import com.docnix.entity.Turma;
 
+import com.docnix.exceptionMapper.RegraDeNegocioException;
+import com.docnix.exceptionMapper.ServerException;
 import com.docnix.repository.TurmaRepository;
 
 
@@ -17,7 +19,15 @@ public class TurmaService {
     private static final TurmaRepository turmaRepository = new TurmaRepository();
     private static final AlunoService alunoService = new AlunoService();
 
-    public Turma inserir(Turma turma) {
+    public Turma inserir(Turma turma) throws RegraDeNegocioException, ServerException {
+        if (turmaRepository.obterNome(turma.getNome()).isPresent()){
+            throw new RegraDeNegocioException("Já existe uma turma cadastrada com esse nome!");
+        }
+
+        if (turmaRepository.obterSigla(turma.getSigla()).isPresent()){
+            throw new RegraDeNegocioException("Já existe uma turma cadastrada com essa sigla!");
+        }
+
         gerarSequencia(turma);
         turma.setAlunos(new HashSet<>());
         turma.getAlunosIds().forEach(alunoId -> turma.getAlunos().add(new Aluno(alunoId)));
@@ -44,19 +54,30 @@ public class TurmaService {
         return String.format("%s - %d", sigla, result + 1);
     }
 
-    public Turma obter(Long id) {
+    public Turma obter(Long id) throws RegraDeNegocioException, ServerException {
         Turma turma = turmaRepository.obter(id);
+        if (turma == null){
+            throw new RegraDeNegocioException("Não existe essa turma no sistema!",404);
+        }
         //listar alunos da turma
         return turma;
     }
 
     //listar
-    public List<Turma> listar() {
+    public List<Turma> listar() throws ServerException {
         return turmaRepository.listar();
     }
 
     //editar
-    public Turma editar(Turma turma) {
+    public Turma editar(Turma turma) throws RegraDeNegocioException, ServerException {
+        if (turmaRepository.obterNome(turma.getNome(),turma.getId()).isPresent()){
+            throw new RegraDeNegocioException("Já existe uma turma cadastrada com esse nome!");
+        }
+
+        if (turmaRepository.obterSigla(turma.getSigla(),turma.getId()).isPresent()){
+            throw new RegraDeNegocioException("Já existe uma turma cadastrada com essa sigla!");
+        }
+
         //verificar se o curso mudou
         if (turma.getCurso().getId() != turmaRepository.consultarCursoDaTurma(turma.getId())) {
             //-se mudou troca o sequencial
