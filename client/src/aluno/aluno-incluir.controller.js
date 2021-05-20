@@ -13,7 +13,6 @@ function AlunoIncluirController($scope, $http, $state, AlunoService) {
 
     function _incluir() {
         AlunoService.cadastrar($scope.aluno).then(response => {
-            $scope.aluno = response;
             return response.id;
         }).then(id=>{
             $state.go('alunoEditar', {id: id});

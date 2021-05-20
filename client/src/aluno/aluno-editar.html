@@ -3,26 +3,14 @@
         <h1 class="h2">Editar Aluno</h1>
     </div>
     <div class="col-12">
-        <div class="row mb-5">
-            <div class="col-md-8 order-md-1 mb-5 offset-4">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 order-md-1 mb-5 offset-3">
                 <form role="form" class="was-validated" name="alunoEditarForm" ng-submit="editar()" novalidate>
                     <form-input type="text" id="nome" label="Nome" ng-model="aluno.nome"></form-input>
                     <form-input type="email" id="email" label="Email" ng-model="aluno.email"></form-input>
                     <form-input type="number" id="idade" label="Idade" ng-model="aluno.idade"></form-input>
                     <form-input-readonly type="text" id="turma" label="Turma" ng-model="aluno.nomeTurma"></form-input-readonly>
-
-                    <div class="row">
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-primary" ui-sref="alunoListar">
-                                Voltar
-                            </button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">
-                                Editar Aluno
-                            </button>
-                        </div>
-                    </div>
+                    <form-buttons voltar-sref="alunoListar" submit-text="Editar Aluno"></form-buttons>
                 </form>
             </div>
         </div>

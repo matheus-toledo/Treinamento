@@ -9,19 +9,7 @@
                     <form-input type="text" id="nome" label="Nome" ng-model="aluno.nome"></form-input>
                     <form-input type="email" id="email" label="Email" ng-model="aluno.email"></form-input>
                     <form-input type="number" id="idade" label="Idade" ng-model="aluno.idade"></form-input>
-
-                    <div class="row">
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-primary offset-2" ui-sref="alunoListar">
-                                Voltar
-                            </button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">
-                                Cadastrar Aluno
-                            </button>
-                        </div>
-                    </div>
+                    <form-buttons voltar-sref="alunoListar" submit-text="Cadastrar Aluno"></form-buttons>
                 </form>
             </div>
         </div>

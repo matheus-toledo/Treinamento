@@ -31,7 +31,6 @@ function AlunoService($http, configParams) {
                 window.alert("Aluno cadastrado com sucesso");
                 return response.data;
             })
-
     }
 
     function _editar(aluno) {

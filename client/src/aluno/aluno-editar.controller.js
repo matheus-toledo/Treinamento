@@ -25,7 +25,7 @@ function AlunoEditarControler($scope, $http, $state, AlunoService, $stateParams)
         AlunoService.editar($scope.aluno)
             .then(() => {
                 $state.go('alunoListar');
-            });
+            }).catch(()=>{});
 
     }
 }
