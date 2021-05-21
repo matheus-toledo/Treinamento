@@ -1,0 +1,13 @@
+<div class="form-group">
+    <div class="col-md-6 mb-3 form-check">
+        <label>{{label}}</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="radio1" name="{{grupo}}" ng-required="ngModel" ng-model="ngModel" ng-value="true">
+            <label class="form-check-label" for="radio1">Sim</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" id="radio2" name="{{grupo}}" ng-required="!ngModel" ng-model="ngModel" ng-value="false">
+            <label class="form-check-label" for="radio2">Não</label>
+        </div>
+    </div>
+</div>

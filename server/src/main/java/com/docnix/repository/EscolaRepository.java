@@ -20,21 +20,19 @@ public class EscolaRepository extends BaseRepository<Escola> {
         super(Escola.class);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Escola> listar() {
-        Session session = HibernateConfig.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Escola.class, "bean");
-        criteria.createAlias("bean.diretor", "diretorEscola");
-        ProjectionList projectionList = Projections.projectionList();
-        projectionList.add(Projections.property("bean.id").as("id"));
-        projectionList.add(Projections.property("bean.nome").as("nome"));
-        projectionList.add(Projections.property("diretorEscola.nome").as("diretor.nome"));
-        projectionList.add(Projections.property("bean.ativa").as("ativa"));
-        projectionList.add(Projections.property("bean.descricao").as("descricao"));
-        criteria.setProjection(Projections.distinct(projectionList));
-
-        criteria.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);
-
-        List<Map<String, Object>> result = criteria.list();
+        List<Map<String, Object>> result = HibernateConfig.getSessionFactory().openSession()
+                .createCriteria(Escola.class, "bean")
+                .createAlias("bean.diretor", "diretorEscola")
+                .setProjection(Projections.distinct(Projections.projectionList()
+                        .add(Projections.property("bean.id").as("id"))
+                        .add(Projections.property("bean.nome").as("nome"))
+                        .add(Projections.property("diretorEscola.nome").as("diretor.nome"))
+                        .add(Projections.property("bean.ativa").as("ativa"))
+                        .add(Projections.property("bean.descricao").as("descricao"))))
+                .setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
+                .list();
 
         List<Escola> escolas = new ArrayList<>();
 
@@ -58,8 +56,8 @@ public class EscolaRepository extends BaseRepository<Escola> {
 
     public Optional<String> obterNome(String nome) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
-                .createCriteria(this.getTClass(),"bean")
-                .add(Restrictions.eq("bean.nome",nome))
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.nome", nome))
                 .setProjection(Projections.property("bean.nome"))
                 .setMaxResults(1)
                 .uniqueResult();
@@ -68,9 +66,9 @@ public class EscolaRepository extends BaseRepository<Escola> {
 
     public Optional<String> obterNome(String nome, long id) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
-                .createCriteria(this.getTClass(),"bean")
-                .add(Restrictions.eq("bean.nome",nome))
-                .add(Restrictions.ne("bean.id",id))
+                .createCriteria(this.getTClass(), "bean")
+                .add(Restrictions.eq("bean.nome", nome))
+                .add(Restrictions.ne("bean.id", id))
                 .setProjection(Projections.property("bean.nome"))
                 .setMaxResults(1)
                 .uniqueResult();

@@ -6,18 +6,14 @@ EscolaIncluirController.$inject = ['$scope', '$http', '$state', 'EscolaService',
 
 function EscolaIncluirController($scope, $http, $state, EscolaService, UsuarioService, configParams) {
 
-    $scope.incluir = incluir;
-    $scope.escola = {};
-    $scope.usuarios = [];
     _inicializar();
-
     function _inicializar() {
-        $scope.escola.ativa=true;
-        UsuarioService.listar()
-            .then(response => {
-                $scope.usuarios = response;
-                $scope.escola.diretor=response[0];
-            })
+        $scope.nomePattern = /^[a-zA-Z](\s|\S|\d){0,254}$/;
+        $scope.descricaoPattern = /^[a-zA-Z](\s|\S|\d){0,299}$/;
+        $scope.incluir = incluir;
+        $scope.escola = {};
+        $scope.escola.diretor={};
+
     }
 
     function incluir() {

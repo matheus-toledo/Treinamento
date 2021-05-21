@@ -15,7 +15,7 @@ function EscolaService($http, configParams) {
         return $http.get(configParams.escolaUrl)
             .then(response => {
                 return response.data;
-            })
+            });
     }
 
     function _consultar(id) {
@@ -45,7 +45,5 @@ function EscolaService($http, configParams) {
             .then(() => {
                 window.alert("Escola deletada com sucesso");
             });
-
     }
-
 }
