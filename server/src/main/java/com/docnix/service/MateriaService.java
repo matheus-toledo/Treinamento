@@ -2,7 +2,6 @@ package com.docnix.service;
 
 
 import com.docnix.entity.Materia;
-import com.docnix.entity.Usuario;
 import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
@@ -29,12 +28,10 @@ public class MateriaService {
         return materia;
     }
 
-    //listar
     public List<Materia> listar() throws ServerException {
         return materiaRepository.listar();
     }
 
-    //editar
     public Materia editar(Materia materia) throws RegraDeNegocioException, ServerException {
         if(materiaRepository.obterNome(materia.getNome(),materia.getId()).isPresent()){
             throw new RegraDeNegocioException("Já existe uma matéria com esse nome!");
@@ -42,9 +39,7 @@ public class MateriaService {
         return materiaRepository.editar(materia);
     }
 
-    //deletar
     public void deletar(Long id) {
         materiaRepository.deletar(id);
     }
-
 }

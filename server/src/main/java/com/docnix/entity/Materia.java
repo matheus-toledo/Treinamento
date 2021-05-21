@@ -80,7 +80,7 @@ public class Materia{
         if (obj==this){
             return true;
         }
-        return this.getId() == ((Materia) obj).getId();
+        return this.getId().equals(((Materia) obj).getId());
     }
 
 }

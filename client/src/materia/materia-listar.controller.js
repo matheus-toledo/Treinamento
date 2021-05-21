@@ -23,9 +23,7 @@ function MateriaListarController($scope, $http, $state, MateriaService) {
         if (confirm(`Deseja deletar a matéria ${nome}?`)) {
             MateriaService.deletar(id).then(() => {
                 _atualizar(id);
-            }).catch(()=>{
-
-            })
+            }).catch(()=>{});
         }
     }
 
@@ -35,8 +33,8 @@ function MateriaListarController($scope, $http, $state, MateriaService) {
 
     function _listar() {
         MateriaService.listar()
-            .then(response => {
-                $scope.materias = response;
+            .then(materiasData => {
+                $scope.materias = materiasData;
             })
 
     }

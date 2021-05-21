@@ -4,13 +4,11 @@ angular.module("TreinamentoApp")
 MateriaService.$inject = ["$http",'configParams'];
 
 function MateriaService ($http, configParams){
-
     this.listar = _listar
     this.cadastrar = _cadastrar
     this.editar = _editar
     this.deletar = _deletar
     this.consultar = _consultar
-
 
     function _listar (){
         return $http.get(configParams.materiaUrl).then(response => {
@@ -37,9 +35,7 @@ function MateriaService ($http, configParams){
         return $http.delete(`${configParams.materiaUrl}/${id}`)
             .then(() => {
                 window.alert("Matéria deletada com sucesso");
-
             });
-
     }
 
     function _consultar(id) {
@@ -48,7 +44,4 @@ function MateriaService ($http, configParams){
                 return response.data;
             });
     }
-
-
-
 }
