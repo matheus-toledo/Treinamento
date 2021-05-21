@@ -4,7 +4,6 @@ angular.module("TreinamentoApp")
 UsuarioService.$inject = ["$http",'configParams'];
 
 function UsuarioService ($http, configParams){
-
     this.listar = _listar
     this.cadastrar = _cadastrar
     this.editar = _editar
@@ -46,7 +45,4 @@ function UsuarioService ($http, configParams){
                 return response.data;
             });
     }
-
-
-
 }

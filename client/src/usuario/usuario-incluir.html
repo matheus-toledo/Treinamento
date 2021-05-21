@@ -6,30 +6,9 @@
         <div class="row mb-5 justify-content-center">
             <div class="col-md-8 order-md-1 mb-5 offset-3">
                 <form role="form" class="was-validated" name="usuarioIncluirForm" ng-submit="usuarioIncluirForm.$valid && incluir()" novalidate>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="firstName">Nome</label>
-                            <input type="text" class="form-control" id="firstName" name="nome" placeholder="" required ng-model="usuario.nome">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="dataDeNascimento">Data de nascimento</label>
-                            <input type="date" class="form-control" id="dataDeNascimento" name="dataDeNascimento" placeholder="" required ng-model="usuario.dataDeNascimento">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-primary" ui-sref="usuarioListar">
-                                Voltar
-                            </button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">
-                                Cadastrar Usuário
-                            </button>
-                        </div>
-                    </div>
+                    <form-input type="text" id="nome" label="Nome" ng-model="usuario.nome" ng-pattern="nomePattern"></form-input>
+                    <form-input type="date" id="dataDeNascimento" label="Data de nascimento" ng-model="usuario.dataDeNascimento"></form-input>
+                    <form-buttons voltar-sref="usuarioListar" submit-text="Cadastrar Usuário"></form-buttons>
                 </form>
             </div>
         </div>
