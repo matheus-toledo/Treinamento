@@ -6,6 +6,7 @@ import com.docnix.entity.Turma;
 import com.docnix.exceptionMapper.NotFoundException;
 import com.docnix.exceptionMapper.RegraDeNegocioException;
 import com.docnix.exceptionMapper.ServerException;
+import com.docnix.repository.AlunoRepository;
 import com.docnix.repository.TurmaRepository;
 
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class TurmaService {
     private static final TurmaRepository turmaRepository = new TurmaRepository();
     private static final AlunoService alunoService = new AlunoService();
+    private static final AlunoRepository alunoRepository = new AlunoRepository();
 
     public Turma inserir(Turma turma) throws RegraDeNegocioException, ServerException {
         if (turmaRepository.obterNome(turma.getNome()).isPresent()){
@@ -27,6 +29,12 @@ public class TurmaService {
 
         if (turmaRepository.obterSigla(turma.getSigla()).isPresent()){
             throw new RegraDeNegocioException("Já existe uma turma cadastrada com essa sigla!");
+        }
+
+        for (Long id : turma.getAlunosIds()) {
+            if(alunoRepository.temTurma(id)){
+                throw new RegraDeNegocioException("A turma não pode ser cadastrada pois um ou mais alunos estão cadastrados em outras turmas!");
+            }
         }
 
         gerarSequencia(turma);
@@ -89,6 +97,8 @@ public class TurmaService {
 
         List<Long> idsAlunosDaTurmaOriginal = turmaRepository.obterIdAlunosDaTurmaOriginal(turma.getId());
 
+        verificaAlunosEmOutrasTurmas(idsAlunosDaTurmaOriginal,turma.getAlunosIds());
+
 
         List<Long> idsParaRemoverSequecia = obterIdsDosAlunosParaRemoverSequencia(idsAlunosDaTurmaOriginal, turma.getAlunosIds());
 
@@ -104,6 +114,15 @@ public class TurmaService {
         alunoService.updateSequencia(idsParaInserirSequencia, sequencialDosAlunos);
 
         return turmaEditada;
+    }
+
+    private void verificaAlunosEmOutrasTurmas(List<Long> idsAlunosDaTurmaOriginal, List<Long> alunosIds) throws RegraDeNegocioException {
+        for (Long novoId : alunosIds) {
+            if(alunoRepository.temTurma(novoId) && !idsAlunosDaTurmaOriginal.contains(novoId)){
+                throw new RegraDeNegocioException("A turma não pode ser editada pois está tentando inserir um ou mais alunos que já estão matriculados em outras turmas!");
+            }
+
+        }
     }
 
 
