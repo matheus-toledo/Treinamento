@@ -13,7 +13,7 @@ function formInput() {
             ngModel: "=",
             max: "@",
             leitura: '=?',
-            ngPattern: "@?"
+            ngPattern: "=?"
         },
         link: function (scope) {
             if (scope.max === undefined) {
