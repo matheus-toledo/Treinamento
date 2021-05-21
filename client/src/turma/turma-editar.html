@@ -9,7 +9,7 @@
                     <form-input type="text" id="Nome" label="Nome" ng-model="turma.nome" ng-pattern="nomePattern"></form-input>
                     <form-input type="text" max="5" id="sigla" label="Sigla" ng-model="turma.sigla" ng-pattern="siglaPattern"></form-input>
                     <form-select-curso id="Curso" label="Curso" ng-model="turma.curso.id" sigla="turma.curso.sigla"></form-select-curso>
-                    <form-input-turma-matricula type="text" id="Matricula" label="Matricula" ng-model="turma.matricula" sigla="turma.curso.sigla"></form-input-turma-matricula>
+                    <form-input-turma-matricula type="text" id="Matricula" label="Matricula" ng-model="turma.matricula" turma-id="turma.id" sigla="turma.curso.sigla"></form-input-turma-matricula>
                     <form-select-alunos id="alunos" label="Alunos" ng-model="turma.alunosIds"></form-select-alunos>
                     <form-buttons voltar-sref="turmaListar" submit-text="Editar turma"></form-buttons>
                 </form>
