@@ -2,33 +2,20 @@ angular.module("TreinamentoApp")
     .controller("CursoIncluirController", CursoIncluirController);
 
 
-CursoIncluirController.$inject = ['$scope', '$http', '$state', 'CursoService', 'UsuarioService', 'MateriaService', 'EscolaService'];
+CursoIncluirController.$inject = ['$scope', '$state', 'CursoService'];
 
-function CursoIncluirController($scope, $http, $state, CursoService, UsuarioService, MateriaService, EscolaService,) {
-
-    $scope.incluir = _incluir;
-    $scope.curso = {};
-    $scope.usuarios = [];
-    $scope.escolas = [];
-    $scope.materias = [];
-
+function CursoIncluirController($scope, $state, CursoService) {
     _inicializar()
 
     function _inicializar() {
-        UsuarioService.listar()
-            .then(response => {
-                $scope.usuarios = response;
-            });
-
-        EscolaService.listar()
-            .then(response => {
-                $scope.escolas = response;
-            })
-
-        MateriaService.listar()
-            .then(response => {
-                $scope.materias = response;
-            })
+        $scope.incluir = _incluir;
+        $scope.nomePattern = /^[a-zA-Z](\s|\S|\d){0,254}$/;
+        $scope.descricaoPattern = /^[a-zA-Z](\s|\S|\d){0,2499}$/;
+        $scope.siglaPattern = /^[A-Z]{1,5}$/;
+        $scope.curso = {};
+        $scope.curso.coordenador={};
+        $scope.curso.escola={};
+        $scope.curso.materiasIds=[];
     }
 
     function _incluir() {

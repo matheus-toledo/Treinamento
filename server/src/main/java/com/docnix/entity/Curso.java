@@ -2,6 +2,7 @@ package com.docnix.entity;
 
 import javax.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -9,7 +10,7 @@ import java.util.Set;
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "nome_curso", nullable = false)
     private String nome;
@@ -21,7 +22,7 @@ public class Curso {
     @JoinColumn(name = "id_coordenador_curso", nullable = false)
     private Usuario coordenador;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TRE_MATERIA_CURSO",
             joinColumns = @JoinColumn(name = "id_curso"),
             inverseJoinColumns = @JoinColumn(name = "id_materia"))
@@ -33,6 +34,9 @@ public class Curso {
     @ManyToOne
     @JoinColumn(name = "id_escola_curso",nullable = false)
     private Escola escola;
+
+    @Transient
+    private List<Long> materiasIds;
 
     public Curso(String nome, String sigla, Usuario coordenador, Set<Materia> materias, String descricao, Escola escola) {
         this.nome = nome;
@@ -46,11 +50,11 @@ public class Curso {
     public Curso() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -100,5 +104,13 @@ public class Curso {
 
     public void setEscola(Escola escola) {
         this.escola = escola;
+    }
+
+    public List<Long> getMateriasIds() {
+        return materiasIds;
+    }
+
+    public void setMateriasIds(List<Long> materiasId) {
+        this.materiasIds = materiasId;
     }
 }

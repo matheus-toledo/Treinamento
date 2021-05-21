@@ -6,69 +6,13 @@
         <div class="row mb-5 justify-content-center">
             <div class="col-md-8 order-md-1 mb-5 offset-3">
                 <form role="form" class="was-validated" name="cursoIncluirForm" ng-submit="cursoIncluirForm.$valid && incluir()" novalidate>
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="nome">Nome (Até 255 caracteres)</label>
-                            <input type="text" maxlength="255" class="form-control" id="nome" name="nome"  required ng-model="curso.nome" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,254}$/"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="sigla">Sigla (Até 5 caracteres)</label>
-                            <input maxlength="5" type="text" class="form-control" id="sigla" name="sigla" required ng-model="curso.sigla" ng-pattern="/^[A-Z]{1,5}$/">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="coordenador">Coordenador</label>
-                            <select id="coordenador" name="coordenador" class="form-control" ng-model="curso.coordenador.id" required>
-                                <option value="">-- Selecione uma opção --</option>
-                                <option ng-repeat="usuario in usuarios" ng-value="usuario.id">{{usuario.nome}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="escola">Escola</label>
-                            <select id="escola" name="escola" class="form-control" ng-model="curso.escola.id" required>
-                                <option value="">-- Selecione uma opção --</option>
-                                <option ng-repeat="escola in escolas" ng-value="escola.id">{{escola.nome}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="materias">Materias</label>
-                            <select multiple id="materias" name="materias" class="form-control" ng-model="curso.materias" required>
-                                <option value="" ng-if="false"></option>
-                                <option ng-repeat="materia in materias" ng-value="materia">{{materia.nome}}</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-6 mb-3">
-                            <label for="descricao">Descrição (Até 2500 caracteres)</label>
-                            <textarea maxlength="2500" class="form-control" id="descricao" name="descricao" required ng-model="curso.descricao" ng-pattern="/^[a-zA-Z](\s|\S|\d){0,2499}$/"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-primary offset-1" ui-sref="cursoListar">
-                                Voltar
-                            </button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">
-                                Cadastrar Curso
-                            </button>
-                        </div>
-                    </div>
+                    <form-input type="text" max="255" id="nome" label="Nome (Até 255 caracteres)" ng-model="curso.nome" ng-pattern="nomePattern"></form-input>
+                    <form-input type="text" max="5" id="sigla" label="Sigla (Até 5 caracteres)" ng-model="curso.sigla" ng-pattern="siglaPattern"></form-input>
+                    <form-select-usuarios id="coordenador" label="Coordenador" ng-model="curso.coordenador.id"></form-select-usuarios>
+                    <form-select-escola id="escola" label="Escola" ng-model="curso.escola.id"></form-select-escola>
+                    <form-select-multiple-materia id="materia" label="Matérias" ng-model="curso.materiasIds"></form-select-multiple-materia>
+                    <form-textarea type="text" max="2500" id="descricao" label="Descrição (Até 2500 caracteres)" ng-model="curso.descricao" ng-pattern="descricaoPattern"></form-textarea>
+                    <form-buttons voltar-sref="cursoListar" submit-text="Cadastrar Curso"></form-buttons>
                 </form>
             </div>
         </div>

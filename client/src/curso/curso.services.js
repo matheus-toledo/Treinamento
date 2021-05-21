@@ -4,13 +4,11 @@ angular.module("TreinamentoApp")
 CursoService.$inject = ["$http",'configParams'];
 
 function CursoService ($http, configParams){
-
     this.listar = _listar
     this.cadastrar = _cadastrar
     this.editar = _editar
     this.deletar = _deletar
     this.consultar = _consultar
-
 
     function _listar (){
         return $http.get(configParams.cursoUrl).then(response => {
@@ -37,7 +35,6 @@ function CursoService ($http, configParams){
         return $http.delete(`${configParams.cursoUrl}/${id}`)
             .then(() => {
                 window.alert("Curso deletado com sucesso");
-
             });
 
     }
@@ -48,7 +45,4 @@ function CursoService ($http, configParams){
                 return response.data;
             });
     }
-
-
-
 }
