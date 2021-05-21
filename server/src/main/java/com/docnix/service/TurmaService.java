@@ -64,12 +64,11 @@ public class TurmaService {
         return turma;
     }
 
-    //listar
+
     public List<Turma> listar() throws ServerException {
         return turmaRepository.listar();
     }
 
-    //editar
     public Turma editar(Turma turma) throws RegraDeNegocioException, ServerException {
         if (turmaRepository.obterNome(turma.getNome(),turma.getId()).isPresent()){
             throw new RegraDeNegocioException("Já existe uma turma cadastrada com esse nome!");
@@ -79,33 +78,27 @@ public class TurmaService {
             throw new RegraDeNegocioException("Já existe uma turma cadastrada com essa sigla!");
         }
 
-        //verificar se o curso mudou
-        if (turma.getCurso().getId() != turmaRepository.consultarCursoDaTurma(turma.getId())) {
-            //-se mudou troca o sequencial
+        if (!turma.getCurso().getId().equals(turmaRepository.consultarCursoDaTurma(turma.getId()))) {
             gerarSequencia(turma);
         }
 
-        //gerar alunos da turma
         turma.setAlunos(new HashSet<>());
         turma.getAlunosIds().forEach(id -> turma.getAlunos().add(new Aluno(id)));
 
-        //gerar o sequencial dos alunos
         Long sequencialDosAlunos = turmaRepository.obterMaiorSequencialDoAlunosDeUmaTurma(turma.getId()).orElse(0L);
 
-        //alunos originais
-        List idsAlunosDaTurmaOriginal = turmaRepository.obterIdAlunosDaTurmaOriginal(turma.getId());
+        List<Long> idsAlunosDaTurmaOriginal = turmaRepository.obterIdAlunosDaTurmaOriginal(turma.getId());
 
 
-        //lista de alunos para remover sequencial
-        List idsParaRemoverSequecia = obterIdsDosAlunosParaRemoverSequencia(idsAlunosDaTurmaOriginal, turma.getAlunosIds());
+        List<Long> idsParaRemoverSequecia = obterIdsDosAlunosParaRemoverSequencia(idsAlunosDaTurmaOriginal, turma.getAlunosIds());
 
-        //lista de alunos para adicionar sequencial
-        List idsParaInserirSequencia = obterIdsDosAlunosParaAdicionarSequencia(turma.getAlunosIds(), idsAlunosDaTurmaOriginal);
 
-        //editar turma
+        List<Long> idsParaInserirSequencia = obterIdsDosAlunosParaAdicionarSequencia(turma.getAlunosIds(), idsAlunosDaTurmaOriginal);
+
+
         Turma turmaEditada = turmaRepository.editar(turma);
 
-        //remover sequencia dos alunos que deixaram de ser da turma
+
         alunoService.removerSequencias(idsParaRemoverSequecia);
 
         alunoService.updateSequencia(idsParaInserirSequencia, sequencialDosAlunos);
@@ -113,19 +106,19 @@ public class TurmaService {
         return turmaEditada;
     }
 
-    //deletar
+
     public void deletar(Long id) {
-        List idsAlunosTurma = turmaRepository.obterIdAlunosDaTurmaOriginal(id);
-        alunoService.removerSequencias(idsAlunosTurma);
+        List<Long> idsAlunosTurma = turmaRepository.obterIdAlunosDaTurmaOriginal(id);
         turmaRepository.deletar(id);
+        alunoService.removerSequencias(idsAlunosTurma);
     }
 
-    private List obterIdsDosAlunosParaRemoverSequencia(List idsAlunosDaTurmaOriginal, List idsAlunosDaNovaTurma) {
-        return (List) idsAlunosDaTurmaOriginal.stream().filter(id -> !idsAlunosDaNovaTurma.contains(id)).collect(Collectors.toList());
+    private List<Long> obterIdsDosAlunosParaRemoverSequencia(List<Long> idsAlunosDaTurmaOriginal, List<Long> idsAlunosDaNovaTurma) {
+        return idsAlunosDaTurmaOriginal.stream().filter(id -> !idsAlunosDaNovaTurma.contains(id)).collect(Collectors.toList());
     }
 
-    private List obterIdsDosAlunosParaAdicionarSequencia(List idsAlunosDaNovaTurma, List idsAlunosDaTurmaOriginal) {
-        return (List) idsAlunosDaNovaTurma.stream().filter(id -> !idsAlunosDaTurmaOriginal.contains(id)).collect(Collectors.toList());
+    private List<Long> obterIdsDosAlunosParaAdicionarSequencia(List<Long> idsAlunosDaNovaTurma, List<Long> idsAlunosDaTurmaOriginal) {
+        return idsAlunosDaNovaTurma.stream().filter(id -> !idsAlunosDaTurmaOriginal.contains(id)).collect(Collectors.toList());
     }
 
 

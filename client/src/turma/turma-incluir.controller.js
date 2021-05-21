@@ -1,46 +1,29 @@
 angular.module("TreinamentoApp")
     .controller('TurmaIncluirController', TurmaIncluirController)
 
-TurmaIncluirController.$inject = ['$scope', 'TurmaService', '$state', 'AlunoService','$stateParams'];
+TurmaIncluirController.$inject = ['$scope', 'TurmaService', '$state','$stateParams'];
 
-function TurmaIncluirController($scope, TurmaService, $state, AlunoService,$stateParams) {
-
-    $scope.incluir = incluir;
+function TurmaIncluirController($scope, TurmaService, $state) {
 
     _inicializar();
 
     ////////////////////////////////////////////////////////
 
     function _inicializar() {
+        $scope.incluir = incluir;
+        $scope.nomePattern = /^[a-zA-Z](\s|\S|\d){0,254}$/;
+        $scope.siglaPattern = /^[A-Z]{1,5}$/;
         $scope.turma = {
             curso: {},
-            alunos: []
+            alunosIds: []
         };
-
     }
 
     function incluir() {
- /*       $scope.turma.alunos = $scope.turma.alunos.map(id => {
-            return {id:id}
-        })*/
-
-        $scope.turma.alunosIds = angular.copy($scope.turma.alunos);
-        $scope.turma.alunos = [];
 
         TurmaService.incluir($scope.turma)
             .then(responseData=>{
-
                 $state.go('turmaEditar', {id: responseData.id});
             })
     }
-
-    function getAlunos(arr) {
-        return arr.filter(elem => {
-            if ($scope.turma.alunos.includes(elem.id)) {
-                return elem
-            }
-        })
-    }
-
-
 }

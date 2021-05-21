@@ -4,12 +4,13 @@ angular.module("TreinamentoApp")
 TurmaEditarController.$inject = ['$scope', '$stateParams', 'TurmaService', '$state'];
 
 function TurmaEditarController($scope, $stateParams, TurmaService, $state) {
-    $scope.editar = editar;
     _inicializar();
-
     //////////////////////////////////////
 
     function _inicializar() {
+        $scope.editar = editar;
+        $scope.nomePattern = /^[a-zA-Z](\s|\S|\d){0,254}$/;
+        $scope.siglaPattern = /^[A-Z]{1,5}$/;
 
         TurmaService.obter($stateParams.id)
             .then(turmaData => {

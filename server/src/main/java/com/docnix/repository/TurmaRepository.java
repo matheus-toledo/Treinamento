@@ -113,9 +113,9 @@ public class TurmaRepository extends BaseRepository<Turma> {
         return result;
     }
 
-
-    public List obterIdAlunosDaTurmaOriginal(Long id) {
-        List result = HibernateConfig.getSessionFactory().openSession()
+    @SuppressWarnings("unchecked")
+    public List<Long> obterIdAlunosDaTurmaOriginal(Long id) {
+        List<Long> result = (List<Long>) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
                 .createAlias("bean.alunos", "alunos")
                 .add(Restrictions.eq("bean.id", id))
@@ -142,31 +142,53 @@ public class TurmaRepository extends BaseRepository<Turma> {
         return (Turma) this.session.merge(turma);
     }
 
+    public Turma editar(Turma turma) {
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        this.session.beginTransaction();
+        Turma turmaEditada = (Turma) this.session.merge(turma);
+        this.session.getTransaction().commit();
+        turmaEditada.setAlunosIds(new ArrayList<>());
+        turmaEditada.setCurso(turma.getCurso());
+        turmaEditada.setAlunos(turma.getAlunos());
+        turmaEditada.getAlunos().forEach(aluno -> {
+            turmaEditada.getAlunosIds().add(aluno.getId());
+        });
+        turmaEditada.getCurso().setEscola(null);
+        turmaEditada.getCurso().setCoordenador(null);
+        turmaEditada.getCurso().setMaterias(null);
+        turmaEditada.getCurso().setDescricao(null);
+        turmaEditada.getCurso().setNome(null);
+        turmaEditada.setAlunos(null);
+
+        this.session.close();
+        return turmaEditada;
+    }
+
     @SuppressWarnings("unchecked")
     public Turma obter(Long id) {
-       this.session = HibernateConfig.getSessionFactory().openSession();
-       Turma turma = this.session.get(this.getTClass(),id);
-       Optional.ofNullable(turma).ifPresent(elem ->{
-           turma.setAlunosIds(new ArrayList<>());
-           turma.setCurso(turma.getCurso());
-           turma.setAlunos(turma.getAlunos());
-           turma.getAlunos().forEach(aluno -> {
-               turma.getAlunosIds().add(aluno.getId());
-           });
-           turma.getCurso().setEscola(null);
-           turma.getCurso().setCoordenador(null);
-           turma.getCurso().setMaterias(null);
-           turma.getCurso().setDescricao(null);
-           turma.getCurso().setNome(null);
-           turma.setAlunos(null);
-       });
-       this.session.close();
-       return turma;
+        this.session = HibernateConfig.getSessionFactory().openSession();
+        Turma turma = this.session.get(this.getTClass(), id);
+        Optional.ofNullable(turma).ifPresent(elem -> {
+            turma.setAlunosIds(new ArrayList<>());
+            turma.setCurso(turma.getCurso());
+            turma.setAlunos(turma.getAlunos());
+            turma.getAlunos().forEach(aluno -> {
+                turma.getAlunosIds().add(aluno.getId());
+            });
+            turma.getCurso().setEscola(null);
+            turma.getCurso().setCoordenador(null);
+            turma.getCurso().setMaterias(null);
+            turma.getCurso().setDescricao(null);
+            turma.getCurso().setNome(null);
+            turma.setAlunos(null);
+        });
+        this.session.close();
+        return turma;
 
     }
 
-    public String obterSiglaParaAluno(Long id){
-       return (String) HibernateConfig.getSessionFactory().openSession()
+    public String obterSiglaParaAluno(Long id) {
+        return (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
                 .createAlias("bean.alunos", "alunos")
                 .add(Restrictions.eq("alunos.id", id))
@@ -175,7 +197,7 @@ public class TurmaRepository extends BaseRepository<Turma> {
                 .uniqueResult();
     }
 
-    public String obterNomeDaTurmaDoAluno(Long id){
+    public String obterNomeDaTurmaDoAluno(Long id) {
         return (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
                 .createAlias("bean.alunos", "alunos")
@@ -185,10 +207,10 @@ public class TurmaRepository extends BaseRepository<Turma> {
                 .uniqueResult();
     }
 
-    public Optional<String> obterNome(String nome){
+    public Optional<String> obterNome(String nome) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
-                .add(Restrictions.eq("bean.nome",nome))
+                .add(Restrictions.eq("bean.nome", nome))
                 .setProjection(Projections.property("bean.nome"))
                 .setMaxResults(1)
                 .uniqueResult();
@@ -196,32 +218,34 @@ public class TurmaRepository extends BaseRepository<Turma> {
         return Optional.ofNullable(result);
     }
 
-    public Optional<String> obterNome(String nome, Long id){
+    public Optional<String> obterNome(String nome, Long id) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
-                .add(Restrictions.eq("bean.nome",nome))
-                .add(Restrictions.ne("bean.id",id))
+                .add(Restrictions.eq("bean.nome", nome))
+                .add(Restrictions.ne("bean.id", id))
                 .setProjection(Projections.property("bean.nome"))
                 .setMaxResults(1)
                 .uniqueResult();
 
         return Optional.ofNullable(result);
     }
-    public Optional<String> obterSigla(String sigla){
+
+    public Optional<String> obterSigla(String sigla) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
-                .add(Restrictions.eq("bean.sigla",sigla))
+                .add(Restrictions.eq("bean.sigla", sigla))
                 .setProjection(Projections.property("bean.sigla"))
                 .setMaxResults(1)
                 .uniqueResult();
 
         return Optional.ofNullable(result);
     }
-    public Optional<String> obterSigla(String sigla, Long id){
+
+    public Optional<String> obterSigla(String sigla, Long id) {
         String result = (String) HibernateConfig.getSessionFactory().openSession()
                 .createCriteria(this.getTClass(), "bean")
-                .add(Restrictions.eq("bean.sigla",sigla))
-                .add(Restrictions.ne("bean.id",id))
+                .add(Restrictions.eq("bean.sigla", sigla))
+                .add(Restrictions.ne("bean.id", id))
                 .setProjection(Projections.property("bean.sigla"))
                 .setMaxResults(1)
                 .uniqueResult();

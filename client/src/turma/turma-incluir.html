@@ -5,26 +5,13 @@
     <div class="col-12">
         <div class="row mb-5 justify-content-center">
             <div class="col-md-8 order-md-1 mb-5 offset-3">
-                {{turma | json}}
                 <form role="form" class="was-validated" name="turmaIncluirForm" ng-submit="turmaIncluirForm.$valid && incluir()" novalidate>
-                   <!-- <pre>{{turmaIncluirForm | json}}</pre>-->
-                    <form-input type="text" id="Nome" label="Nome" ng-model="turma.nome"></form-input>
-
-                    <form-input type="text" max="5" id="sigla" label="Sigla" ng-model="turma.sigla"></form-input>
-
+                    <form-input type="text" id="Nome" label="Nome" ng-model="turma.nome" ng-pattern="nomePattern"></form-input>
+                    <form-input type="text" max="5" id="sigla" label="Sigla" ng-model="turma.sigla" ng-pattern="siglaPattern"></form-input>
                     <form-select-curso id="Curso" label="Curso" ng-model="turma.curso.id" sigla="turma.curso.sigla"></form-select-curso>
-
                     <form-input-turma-matricula type="text" id="Matricula" label="Matricula" ng-model="turma.matricula" sigla="turma.curso.sigla"></form-input-turma-matricula>
-                    <form-select-alunos id="alunos" ng-multiple="multiple" label="Alunos" ng-model="turma.alunos"></form-select-alunos>
-
-                    <div class="row">
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-primary offset-1" ui-sref="cursoListar">Voltar</button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-lg btn-success" type="submit">Cadastrar Turma</button>
-                        </div>
-                    </div>
+                    <form-select-alunos id="alunos" label="Alunos" ng-model="turma.alunosIds"></form-select-alunos>
+                    <form-buttons voltar-sref="turmaListar" submit-text="Cadastrar turma"></form-buttons>
                 </form>
             </div>
         </div>
