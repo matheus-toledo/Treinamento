@@ -5,13 +5,11 @@ angular.module("TreinamentoApp")
 CursoEditarController.$inject = ['$scope','$state', '$stateParams', 'CursoService'];
 
 function CursoEditarController($scope, $state, $stateParams, CursoService) {
-
-    $scope.editar = _editar;
-    $scope.curso = {};
-
     _inicializar();
 
     function _inicializar() {
+        $scope.editar = _editar;
+        $scope.curso = {};
 
         CursoService.consultar($stateParams.id)
             .then(response => {

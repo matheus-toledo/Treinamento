@@ -4,13 +4,12 @@ angular.module("TreinamentoApp")
 CursoListarController.$inject = ['$scope', '$http', '$state', 'CursoService','configParams'];
 
 function CursoListarController($scope, $http, $state, CursoService, configParams) {
-    $scope.editar = _editar;
-    $scope.deletar = _deletar;
-    $scope.cursos=[];
-
     _inicializar();
 
     function _inicializar() {
+        $scope.editar = editar;
+        $scope.deletar = deletar;
+        $scope.cursos=[];
         _listar();
     }
 
@@ -19,7 +18,7 @@ function CursoListarController($scope, $http, $state, CursoService, configParams
     }
 
 
-    function _deletar(nome, id) {
+    function deletar(nome, id) {
         if (confirm(`Deseja deletar o curso: ${nome}?`)) {
             CursoService.deletar(id).then(() => {
                 _atualizar(id);
@@ -27,7 +26,7 @@ function CursoListarController($scope, $http, $state, CursoService, configParams
         }
     }
 
-    function _editar(id) {
+    function editar(id) {
         $state.go('cursoEditar', {id:id});
     }
 
